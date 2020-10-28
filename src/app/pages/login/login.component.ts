@@ -1,6 +1,9 @@
 import { Route } from '@angular/compiler/src/core';
 import { Component, OnInit } from '@angular/core';
-import { Router } from '@angular/router';
+import { Router, ActivatedRoute } from '@angular/router';
+import { Observable } from 'rxjs';
+import { switchMap } from 'rxjs/operators';
+import { PersonServiceService } from 'src/app/services/person-service.service';
 
 @Component({
   selector: 'app-login',
@@ -9,22 +12,29 @@ import { Router } from '@angular/router';
 })
 export class LoginComponent implements OnInit {
 
-  email: string;
+  loginEmail: string;
+  isLoginTemplate = true;
 
-  constructor( private router: Router) { }
+  constructor(
+    private router: Router,
+    private activatedRoute: ActivatedRoute,
+    private personService: PersonServiceService
+    ) { 
+      
+    }
 
   ngOnInit(): void {
   }
 
   redirectRegister(){
     //redirection
-    console.log('redirect work !!');
-    this.router.navigate(['/inscription', { email: this.email }]);
+    this.isLoginTemplate = false;
+    //this.router.navigate(['/inscription']);
   }
 
   login() {
     //login
-    console.log(this.email);
+    console.log(this.loginEmail);
     
 }
 

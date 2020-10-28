@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Input } from '@angular/core';
 import { Router, ActivatedRoute, ParamMap } from '@angular/router';
 
 @Component({
@@ -8,19 +8,19 @@ import { Router, ActivatedRoute, ParamMap } from '@angular/router';
 })
 export class RegisterComponent implements OnInit {
 
-  email: string;
+  @Input() email: string;
 
-  constructor(private activitedRoute: ActivatedRoute) { }
+  constructor(private activitedRoute: ActivatedRoute) { 
+    
+  }
 
   ngOnInit(): void {
+    console.log(this.email);
 
-    this.activitedRoute.queryParams.subscribe(param => {
-      if (param.email !== undefined) {
-          this.email = param.email
-      }
-      console.log(this.email);
-    });
+  }
 
+  reloadPage(){
+    document.location.reload(true);
   }
 
 }
