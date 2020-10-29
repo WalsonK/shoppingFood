@@ -7,19 +7,26 @@ import { Component, OnInit } from '@angular/core';
 })
 export class RoomListComponent implements OnInit {
 
-  roomName = 'Salon';
-  isModify = false;
+  
+
+  rooms = [
+    {
+      name: 'salon',
+      lastModif: '28/11/2020 à 22h30',
+      isModify: false
+    },
+    /*{
+      name: 'cuisine',
+      lastModif: '05/11/2020 à 9h00',
+      isModify: false
+    }*/
+  ];
 
   constructor() { }
 
   ngOnInit(): void {
   }
 
-  changeRoomName(){
-    this.isModify = true;
-  }
-  validateChangeRoomName(){
-    this.isModify = false;
-  }
+  
 
 }

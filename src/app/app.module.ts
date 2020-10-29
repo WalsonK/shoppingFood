@@ -9,13 +9,17 @@ import { RegisterComponent } from './pages/register/register.component';
 import { RoomListComponent } from './pages/room-list/room-list.component';
 
 import { PersonServiceService } from './services/person-service.service';
+import { RoomsComponent } from './pages/rooms/rooms.component';
+import { ItemsComponent } from './pages/items/items.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     LoginComponent,
     RegisterComponent,
-    RoomListComponent
+    RoomListComponent,
+    RoomsComponent,
+    ItemsComponent
   ],
   imports: [
     BrowserModule,
