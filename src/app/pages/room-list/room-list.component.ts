@@ -10,7 +10,7 @@ export class RoomListComponent implements OnInit {
   
 
   rooms = [
-    {
+    { //room 1
       name: 'salon',
       lastModif: '28/11/2020 à 22h30',
       isModify: false

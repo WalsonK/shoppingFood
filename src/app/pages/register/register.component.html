@@ -8,11 +8,11 @@
     </div>
 
     <!-- Register Form -->
-    <form>
-        <input type="text" id="first" class="fadeIn second" name="first" placeholder="Prénom">
+    <form (submit)="register()">
+        <input type="text" id="first" class="fadeIn second" name="first" placeholder="Prénom" [(ngModel)]="name">
         <input type="text" id="last" class="fadeIn second" name="last" placeholder="Nom">
         <input type="email" id="login" class="fadeIn third" name="login" placeholder="E-mail" [(ngModel)]="email">
-        <input type="password" id="password" class="fadeIn fourth" name="password" placeholder="Mot de passe">
+        <input type="password" id="password" class="fadeIn fourth" name="password" placeholder="Mot de passe" [(ngModel)]="password">
         <input type="submit" class="fadeIn fourth" value="s'inscrire">
     </form>
 

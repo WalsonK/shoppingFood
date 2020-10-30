@@ -17,8 +17,14 @@ export class RoomsComponent implements OnInit {
       imgLink: '../../../assets/img/mouchoirs.png',
       name: 'Mouchoirs',
       quant: 5,
-      maxQuant: 10
+      maxQuant: 20
     },
+    {
+      imgLink: '../../../assets/img/mouchoirs.png',
+      name: 'Mouchoirs 2',
+      quant: 5,
+      maxQuant: 10
+    }
     /*{
       name: 'cuisine',
       lastModif: '05/11/2020 à 9h00',

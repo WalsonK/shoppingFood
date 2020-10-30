@@ -11,12 +11,16 @@
       <h5 class="card-title">Liste des items :</h5>
       <div class="card-text">
           <!-- card for one Items-->
-          <app-items *ngFor="let item of items"
-            [imgLink]="item.imgLink" 
-            [name]="item.name" 
-            [quant]="item.quant" 
-            [maxQuant]="item.maxQuant">
-          </app-items>
+          <div class="row mb-4">
+            <app-items *ngFor="let item of items"
+              [imgLink]="item.imgLink" 
+              [name]="item.name" 
+              [quant]="item.quant" 
+              [maxQuant]="item.maxQuant"
+              class="mx-2">
+            </app-items>
+          </div>
+          
         </div>
       <button type="button" class="btn btn-outline-warning" *ngIf="!isModify; else elseBlock2" (click)="changeRoomName()">Modifier</button>
       <ng-template #elseBlock2 class="row">

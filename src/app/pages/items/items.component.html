@@ -1,7 +1,50 @@
 <div class="card text-center" style="width: 18rem;">
     <img [src]="imgLink" class="card-img-top" alt="...">
+    <div class="card-img-overlay">
+      <!-- Button to Edit -->
+      <button class="btn float-right" *ngIf="!isEdit; else validateEditBlock" (click)="onEdit()">
+        <fa-icon icon="pen-square"></fa-icon>
+      </button>
+      <!-- Button to Validate -->
+      <ng-template #validateEditBlock >
+        <button class="btn float-left">
+          <fa-icon icon="trash-alt"></fa-icon>
+        </button>
+        <button class="btn float-right" (click)="onValidEdit()">
+          <fa-icon icon="check-square"></fa-icon>
+        </button>
+      </ng-template>
+    </div>
     <div class="card-body">
       <p class="card-text">{{name}} </p>
-      <footer class="blockquote-footer">Quantité = <cite title="Source Title">{{quant}}/{{maxQuant}}</cite></footer>
+      <!-- Classic qunatity display -->
+      <footer class="blockquote-footer" *ngIf="!isEdit; else editQuantBlock">
+        Quantité = <cite title="Source Title">{{quant}}/{{maxQuant}}</cite>
+      </footer>
+
+      <!-- On Edit quantity display-->
+      <ng-template #editQuantBlock >
+        <div class="form-group row input-group mb-3 ml-1">
+          <div class="input-group-prepend">
+            <button class="btn btn-outline-secondary" type="button" (click)="lowQuant()">
+              <fa-icon icon="minus"></fa-icon>
+            </button>
+          </div>
+  
+          <input class="form-control" 
+            type="number" 
+            id="example-number-input" 
+            [(ngModel)]="quant" 
+            min="0" 
+            [max]="maxQuant">
+  
+          <div class="input-group-append">
+            <button class="btn btn-outline-secondary" type="button" (click)="upQuant()">
+              <fa-icon icon="plus"></fa-icon>
+            </button>
+          </div>
+        </div>
+      </ng-template>
+
     </div>
 </div>
