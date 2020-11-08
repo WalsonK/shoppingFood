@@ -17,12 +17,14 @@ export class RoomsComponent implements OnInit {
       imgLink: '../../../assets/img/mouchoirs.png',
       name: 'Mouchoirs',
       quant: 5,
+      isEdit: false,
       maxQuant: 20
     },
     {
       imgLink: '../../../assets/img/mouchoirs.png',
       name: 'Mouchoirs 2',
       quant: 5,
+      isEdit: false,
       maxQuant: 10
     }
     /*{
@@ -35,10 +37,16 @@ export class RoomsComponent implements OnInit {
   constructor() { }
 
   ngOnInit(): void {
+    
   }
 
   changeRoomName(){
     this.isModify = true;
+    
+    //items modifing statut
+    for(let i = 0;i < this.items.length;i++){
+      this.items[i].isEdit = true;
+    }
   }
   validateChangeRoomName(){
     this.isModify = false;
@@ -46,6 +54,11 @@ export class RoomsComponent implements OnInit {
     //Change last modif date format (JJ/MM/AAAA à HH/mm)
     var d = new Date();
     this.lastModif = d.getDate()+'/'+(d.getMonth()+1)+'/'+d.getFullYear()+' à '+d.getHours() + 'h' + d.getMinutes();
+
+    //items modifing statut
+    for(let i = 0;i < this.items.length;i++){
+      this.items[i].isEdit = false;
+    }
   }
 
 }

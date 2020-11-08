@@ -7,12 +7,12 @@ import { Component, OnInit, Input } from '@angular/core';
 })
 export class ItemsComponent implements OnInit {
 
-  isEdit : boolean;
 
   @Input() imgLink: string;
   @Input() name: string;
   @Input() quant: number;
   @Input() maxQuant: number;
+  @Input() isEdit: boolean;
 
   
 
