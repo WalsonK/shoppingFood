@@ -1,4 +1,6 @@
 import { Component, OnInit, Input } from '@angular/core';
+import { MatDialog } from '@angular/material/dialog';
+import { DialogAddItemComponent } from 'src/app/pages/dialog-add-item/dialog-add-item.component';
 
 @Component({
   selector: 'app-rooms',
@@ -34,7 +36,7 @@ export class RoomsComponent implements OnInit {
     }*/
   ];
 
-  constructor() { }
+  constructor(public dialog : MatDialog) {}
 
   ngOnInit(): void {
     
@@ -61,4 +63,11 @@ export class RoomsComponent implements OnInit {
     }
   }
 
+  openDialog(){
+    let dialogRef = this.dialog.open(DialogAddItemComponent);
+
+    dialogRef.afterClosed().subscribe(result => {
+      console.log('Dialog result: '+result)
+    })
+  }
 }

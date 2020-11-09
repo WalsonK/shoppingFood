@@ -3,7 +3,6 @@
         <div *ngIf="!isModify; else elseBlock">{{ roomName }}</div>
         <ng-template #elseBlock class="row">
             <input type="text" id="roomNameInput" class="form-control" name="roomName" placeholder="Le nouveau nom ?" [(ngModel)]="roomName">
-            <button type="button" class="btn btn-outline-success" (click)="validateChangeRoomName()">valider</button>
         </ng-template>
     </div>
     <div class="card-body">
@@ -27,9 +26,11 @@
       <ng-template #elseBlock2 class="row">
 
         <!-- Button trigger modal -->
-        <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModal">
-          Launch demo modal
+        <button type="button" class="btn btn-outline-primary" (click)="openDialog()">
+          Ajouter un item
         </button>
+
+        <button type="button" class="btn btn-outline-success ml-5" (click)="validateChangeRoomName()">valider</button>
       </ng-template>
 
       

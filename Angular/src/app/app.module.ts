@@ -6,6 +6,8 @@ import { FormsModule } from '@angular/forms';
 import { FontAwesomeModule, FaIconLibrary } from '@fortawesome/angular-fontawesome';
 import { faFilm, fas } from '@fortawesome/free-solid-svg-icons';
 
+//Import Angular Material
+import { MatDialogModule } from '@angular/material/dialog';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
@@ -17,6 +19,8 @@ import { PersonServiceService } from './services/person-service.service';
 import { RoomsComponent } from './pages/rooms/rooms.component';
 import { ItemsComponent } from './pages/items/items.component';
 import { HttpClientModule } from '@angular/common/http';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { DialogAddItemComponent } from './pages/dialog-add-item/dialog-add-item.component';
 
 
 
@@ -27,14 +31,17 @@ import { HttpClientModule } from '@angular/common/http';
     RegisterComponent,
     RoomListComponent,
     RoomsComponent,
-    ItemsComponent
+    ItemsComponent,
+    DialogAddItemComponent
   ],
   imports: [
     BrowserModule,
     AppRoutingModule,
     FormsModule,
     HttpClientModule,
-    FontAwesomeModule
+    FontAwesomeModule,
+    MatDialogModule,
+    BrowserAnimationsModule
   ],
   providers: [
     PersonServiceService,
