@@ -20,14 +20,14 @@ export class RoomsComponent implements OnInit {
       name: 'Mouchoirs',
       quant: 5,
       isEdit: false,
-      maxQuant: 20
+      maxQuant: 10
     },
     {
-      imgLink: '../../../assets/img/mouchoirs.png',
-      name: 'Mouchoirs 2',
-      quant: 5,
+      imgLink: '../../../assets/img/papierToilet.png', 
+      name: 'Papier Toilette',
+      quant: 15,
       isEdit: false,
-      maxQuant: 10
+      maxQuant: 20
     }
     /*{
       name: 'cuisine',

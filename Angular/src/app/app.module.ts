@@ -26,6 +26,7 @@ import { ItemsComponent } from './pages/items/items.component';
 import { HttpClientModule } from '@angular/common/http';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { DialogAddItemComponent } from './pages/dialog-add-item/dialog-add-item.component';
+import { DialogSettingsComponent } from './pages/dialog-settings/dialog-settings.component';
 
 
 
@@ -41,7 +42,8 @@ import { DialogAddItemComponent } from './pages/dialog-add-item/dialog-add-item.
     ItemsComponent,
     DialogAddItemComponent,
     HomeComponent,
-    ShopListComponent
+    ShopListComponent,
+    DialogSettingsComponent
   ],
   imports: [
     BrowserModule,
