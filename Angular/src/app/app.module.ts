@@ -11,6 +11,8 @@ import { MatDialogModule } from '@angular/material/dialog';
 import { MatToolbarModule } from '@angular/material/toolbar';
 import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
+import { MatSlideToggleModule } from '@angular/material/slide-toggle';
+import { MatFormFieldModule  } from '@angular/material/form-field';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
@@ -55,6 +57,8 @@ import { DialogSettingsComponent } from './pages/dialog-settings/dialog-settings
     MatToolbarModule,
     MatButtonModule,
     MatIconModule,
+    MatSlideToggleModule,
+    MatFormFieldModule,
     BrowserAnimationsModule
   ],
   providers: [
