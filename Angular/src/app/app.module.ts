@@ -13,6 +13,12 @@ import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
 import { MatSlideToggleModule } from '@angular/material/slide-toggle';
 import { MatFormFieldModule  } from '@angular/material/form-field';
+import { MatInputModule } from '@angular/material/input';
+import { MatExpansionModule } from '@angular/material/expansion';
+import { MatDividerModule } from '@angular/material/divider';
+import { MatDatepickerModule } from '@angular/material/datepicker';
+import { MatNativeDateModule } from '@angular/material/core';
+import { MatListModule } from '@angular/material/list';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
@@ -29,6 +35,7 @@ import { HttpClientModule } from '@angular/common/http';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { DialogAddItemComponent } from './pages/dialog-add-item/dialog-add-item.component';
 import { DialogSettingsComponent } from './pages/dialog-settings/dialog-settings.component';
+
 
 
 
@@ -59,6 +66,12 @@ import { DialogSettingsComponent } from './pages/dialog-settings/dialog-settings
     MatIconModule,
     MatSlideToggleModule,
     MatFormFieldModule,
+    MatExpansionModule,
+    MatDividerModule,
+    MatDatepickerModule,
+    MatNativeDateModule,
+    MatInputModule,
+    MatListModule,
     BrowserAnimationsModule
   ],
   providers: [

@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { dateInputsHaveChanged } from '@angular/material/datepicker/datepicker-input-base';
 
 @Component({
   selector: 'app-dialog-settings',
@@ -7,7 +8,21 @@ import { Component, OnInit } from '@angular/core';
 })
 export class DialogSettingsComponent implements OnInit {
 
+  public alert:boolean = true;
+  public darkMode:boolean = false;
+  public paiement:boolean = true;
+  
   public tabSelected:string;
+
+  cards = [
+    {
+      id: 0,
+      numero: '***2435',
+      expirationDate: Date.now() ,
+      cvv: 523,
+      isEdit: false
+    }
+  ];
 
   constructor() { }
 
@@ -61,6 +76,16 @@ export class DialogSettingsComponent implements OnInit {
 
     console.log('l\'option est : '+this.tabSelected);
     
+  }
+
+  
+  editCard(id){
+    //card modifing statut
+    this.cards[id].isEdit = true;
+  }
+  validateCard(id){
+    this.cards[id].isEdit = false;
+    console.log(this.cards[id].cvv);
   }
 
 }
