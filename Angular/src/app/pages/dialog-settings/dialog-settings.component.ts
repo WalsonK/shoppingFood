@@ -11,6 +11,7 @@ export class DialogSettingsComponent implements OnInit {
   public alert:boolean = true;
   public darkMode:boolean = false;
   public paiement:boolean = true;
+  public lowQuant:number = 4;
   
   public tabSelected:string;
 
@@ -21,6 +22,32 @@ export class DialogSettingsComponent implements OnInit {
       expirationDate: Date.now() ,
       cvv: 523,
       isEdit: false
+    }
+  ];
+  historicToasts =[
+    {
+      modifName: 'Maman',
+      modifItem: 'mouchoirs',
+      modifQuant: 1,
+      modifRoom: 'Salon',
+      modifTime: '1 min',
+      isMe: false
+    },
+    {
+      modifName: 'Papa',
+      modifItem: 'papier Toilet',
+      modifQuant: 15,
+      modifRoom: 'Salon',
+      modifTime: '20 min',
+      isMe: true
+    },
+    {
+      modifName: 'Fille',
+      modifItem: 'mouchoirs',
+      modifQuant: 5,
+      modifRoom: 'Salon',
+      modifTime: '1 heure',
+      isMe: false
     }
   ];
 

@@ -19,6 +19,7 @@ import { MatDividerModule } from '@angular/material/divider';
 import { MatDatepickerModule } from '@angular/material/datepicker';
 import { MatNativeDateModule } from '@angular/material/core';
 import { MatListModule } from '@angular/material/list';
+import { MatSliderModule } from '@angular/material/slider';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
@@ -72,6 +73,7 @@ import { DialogSettingsComponent } from './pages/dialog-settings/dialog-settings
     MatNativeDateModule,
     MatInputModule,
     MatListModule,
+    MatSliderModule,
     BrowserAnimationsModule
   ],
   providers: [
