@@ -21,6 +21,9 @@ import { MatNativeDateModule } from '@angular/material/core';
 import { MatListModule } from '@angular/material/list';
 import { MatSliderModule } from '@angular/material/slider';
 import { MatSnackBarModule } from '@angular/material/snack-bar';
+import { MatStepperModule } from '@angular/material/stepper';
+import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
+import { MatProgressBarModule } from '@angular/material/progress-bar';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
@@ -37,6 +40,7 @@ import { HttpClientModule } from '@angular/common/http';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { DialogAddItemComponent } from './pages/dialog-add-item/dialog-add-item.component';
 import { DialogSettingsComponent } from './pages/dialog-settings/dialog-settings.component';
+import { LoadingcardComponent } from './pages/loadingcard/loadingcard.component';
 
 
 
@@ -54,7 +58,8 @@ import { DialogSettingsComponent } from './pages/dialog-settings/dialog-settings
     DialogAddItemComponent,
     HomeComponent,
     ShopListComponent,
-    DialogSettingsComponent
+    DialogSettingsComponent,
+    LoadingcardComponent
   ],
   imports: [
     BrowserModule,
@@ -76,6 +81,9 @@ import { DialogSettingsComponent } from './pages/dialog-settings/dialog-settings
     MatListModule,
     MatSliderModule,
     MatSnackBarModule,
+    MatStepperModule,
+    MatProgressSpinnerModule,
+    MatProgressBarModule,
     BrowserAnimationsModule
   ],
   providers: [
