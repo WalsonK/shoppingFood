@@ -13,3 +13,11 @@ exports.registerUser = (name, email, hash) => {
         });
     }) 
 }
+
+exports.loginUser = (email,hash) => {
+    return new Promise((resolve, reject) =>{
+        bdd.query('SELECT COUNT(*) as "count" FROM `user` WHERE `email` = ? AND `hash` = ?',{ email: email, hash: hash }, (error, results, fields) =>{
+            resolve(results.insertId)
+        });
+    })
+}

@@ -25,3 +25,26 @@ console.log('Start register')
     }
         
 }
+
+exports.login = (req, res, next) => {
+    console.log('start loggin !');
+
+    const re = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+
+
+    if (req.body.email === undefined || req.body.password === undefined) {
+        res.json({ error: true, message: 'Veuillez renseigner les champs !' });
+    }
+    else if (req.body.email.length < 5) {
+        res.json({ error: true, message: 'L\'email est trop courte !' });
+    }else if (req.body.password.length < 5) {
+        res.json({ error: true, message: 'Le mot de passe est trop court !' });
+    }
+    else if (!re.test(String(req.body.email).toLowerCase())) {
+        res.json({ error: true, message: 'L\'email est incorrect !' });
+    } else{
+        res.json({ error: false, message: 'Connection réussi au middleware !' });
+        next();
+    }
+
+}

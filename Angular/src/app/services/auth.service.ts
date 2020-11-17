@@ -12,6 +12,10 @@ export class AuthService {
 
 
   registerUser(name: string, email: string, password: string){
-    return this.http.post('http://localhost:8001/user', { name, email, password});
+    return this.http.post('http://localhost:8001/register', { name, email, password});
+  }
+
+  loginUser(email: string, password: string){
+    return this.http.post('http://localhost:8001/login', {email, password});
   }
 }

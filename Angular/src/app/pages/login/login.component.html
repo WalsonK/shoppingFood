@@ -10,7 +10,7 @@
     <!-- Login Form -->
     <form (submit)="login()">
       <input type="email" id="login" class="fadeIn second" name="login" placeholder="Login" [(ngModel)]="loginEmail">
-      <input type="password" id="password" class="fadeIn third" name="password" placeholder="Mot de passe">
+      <input type="password" id="password" class="fadeIn third" name="password" placeholder="Mot de passe" [(ngModel)]="loginPassword">
       <input type="submit" class="fadeIn fourth" value="se connecter">
     </form>
 
