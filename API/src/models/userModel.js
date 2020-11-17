@@ -6,9 +6,9 @@ exports.checkEmail = (email) => {
     })
 }
 
-exports.registerUser = (name, email, hash) => {
+exports.registerUser = (firstName, lastName, email, hash) => {
     return new Promise((resolve, reject) => {
-        bdd.query('INSERT INTO user SET ?', { email: email, name: name, hash: hash }, (error, results, fields) => {
+        bdd.query('INSERT INTO user SET ?', { email: email, firstName: firstName, lastName: lastName, hash: hash }, (error, results, fields) => {
             resolve(results.insertId)
         });
     }) 

@@ -13,7 +13,8 @@ import { MatSnackBar } from '@angular/material/snack-bar';
 export class RegisterComponent implements OnInit {
 
   @Input() email: string;
-  name:string;
+  firstName:string;
+  lastName: string;
   password:string;
 
 
@@ -35,7 +36,7 @@ export class RegisterComponent implements OnInit {
 
   register(): void {
     // Verification des données saisie. (Vérif. email, champs remplis - trim, ...)
-    this.auth.registerUser(this.name, this.email, this.password).subscribe((data: UserRegister) => {
+    this.auth.registerUser(this.firstName, this.lastName, this.email, this.password).subscribe((data: UserRegister) => {
         if (data.error) {
             console.log('Inscription échouée : '+ data.message);
             this.snackBar.open(data.message,'',{ duration : 2000, panelClass: 'snackbar-danger'});

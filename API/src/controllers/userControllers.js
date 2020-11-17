@@ -10,7 +10,7 @@ exports.register = async(req, res) => {
     else {
         const salt = await bcrypt.genSalt(10) // Création du salt random
         const hash = await bcrypt.hash(req.body.password, salt) // Chiffrement du password
-        const isRegister = await Users.registerUser(req.body.name, req.body.email, hash)
+        const isRegister = await Users.registerUser(req.body.firstName, req.body.lastName, req.body.email, hash)
         if (isRegister == 1)
             res.json({ error: false, message: 'Inscription réussie' })
         else

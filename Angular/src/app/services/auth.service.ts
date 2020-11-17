@@ -11,8 +11,8 @@ export class AuthService {
   constructor(private http: HttpClient) { }
 
 
-  registerUser(name: string, email: string, password: string){
-    return this.http.post('http://localhost:8001/register', { name, email, password});
+  registerUser(firstName: string, lastName: string, email: string, password: string){
+    return this.http.post('http://localhost:8001/register', { firstName, lastName, email, password });
   }
 
   loginUser(email: string, password: string){
