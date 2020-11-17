@@ -19,6 +19,9 @@ console.log('Start register')
     
     else if (!re.test(String(req.body.email).toLowerCase())) {
         res.json({ error: true, message: 'L\'email est incorrect !' });
-    } else
-        next()
+    } else{
+        res.json({ error: false, message: 'Inscription réussi !' });
+        next();
+    }
+        
 }

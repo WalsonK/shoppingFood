@@ -5,8 +5,8 @@ var connection = mysql.createConnection({
     password: 'root', // Mac
     // password: '', // Windows
     database: "shoppingFoodDb",
-    port: 8889, // 3306
-    socketPath: '/Applications/MAMP/tmp/mysql/mysql.sock' // Uniquement mac
+    port: 3306, // windows : 3306 | mac : 8889
+    //socketPath: '/Applications/MAMP/tmp/mysql/mysql.sock' // Uniquement mac
 });
 
 connection.connect((err) => {

@@ -2,6 +2,7 @@ import { Component, OnInit, Input } from '@angular/core';
 import { Router, ActivatedRoute, ParamMap } from '@angular/router';
 import { UserRegister } from 'src/app/interfaces/user';
 import { AuthService } from 'src/app/services/auth.service';
+import { MatSnackBar } from '@angular/material/snack-bar';
 
 
 @Component({
@@ -16,13 +17,16 @@ export class RegisterComponent implements OnInit {
   password:string;
 
 
-  constructor(private activitedRoute: ActivatedRoute, private auth: AuthService) { 
+  constructor(private activitedRoute: ActivatedRoute, private auth: AuthService, private snackBar: MatSnackBar) { 
     
   }
 
   ngOnInit(): void {
-    console.log(this.email);
 
+  }
+
+  openSnackBar(message){
+    this.snackBar.open(message);
   }
 
   reloadPage(){
@@ -33,9 +37,15 @@ export class RegisterComponent implements OnInit {
     // Verification des données saisie. (Vérif. email, champs remplis - trim, ...)
     this.auth.registerUser(this.name, this.email, this.password).subscribe((data: UserRegister) => {
         if (data.error) {
-            console.log('User don\'t register');
+            console.log('Inscription échouée : '+ data.message);
+            this.snackBar.open(data.message,'',{ duration : 2000, panelClass: 'snackbar-danger'});
         } else {
-            console.log('Goooood boy !!!');
+            console.log('Goooood boy !!! ' + data.message);
+            let snackBarRef = this.snackBar.open(data.message,'',{ duration : 2000, panelClass: 'snackbar-success'});
+
+            snackBarRef.afterDismissed().subscribe(() => {
+              this.reloadPage();
+            });
         }
     });
   }
