@@ -7,12 +7,18 @@ import { LoadingcardComponent } from 'src/app/pages/loadingcard/loadingcard.comp
 @Component({
   selector: 'app-home',
   templateUrl: './home.component.html',
-  styleUrls: ['../login/login.component.scss','./home.component.scss']
+  styleUrls: ['./home.component.scss']
 })
 export class HomeComponent implements OnInit {
 
   globalLoading:boolean = true;
   isFirstConnection:boolean = true;
+
+  pseudo: string;
+  isAlertActivate: boolean = false;
+  isDarkMode: boolean = false;
+  isAutomaticPaiement: boolean = false;
+  lowQuant: number;
 
   constructor(public dialog : MatDialog) { }
 
@@ -23,14 +29,17 @@ export class HomeComponent implements OnInit {
   }
 
 
-  startDashboaard(){
-    this.isFirstConnection = false;
+  startDashboard(){
+   /* this.isFirstConnection = false;
     this.globalLoading = true;
 
     setTimeout(() => {
       this.globalLoading = false;
     }, 3000);
+    */
+   console.log('pseudo : '+this.pseudo + '| isAlertActivate : '+ this.isAlertActivate + ' | isdarkMade : ' + this.isDarkMode + ' | isPaiment : '+ this.isAutomaticPaiement + ' | lowQuant = '+ this.lowQuant);
   }
+
 
   openDialogSettings(){
     let dialogRef = this.dialog.open(DialogSettingsComponent,{
