@@ -1,8 +1,12 @@
 import { Component, OnInit } from '@angular/core';
 import { MatToolbar } from '@angular/material/toolbar';
 import { MatDialog } from '@angular/material/dialog';
+import { FormControl } from '@angular/forms';
 import { DialogSettingsComponent } from 'src/app/pages/dialog-settings/dialog-settings.component';
 import { LoadingcardComponent } from 'src/app/pages/loadingcard/loadingcard.component';
+import { Observable } from 'rxjs';
+import { map, startWith } from 'rxjs/operators';
+import { MyTeam } from 'src/app/interfaces/my-team'; //Myteam interface
 
 @Component({
   selector: 'app-home',
@@ -20,13 +24,39 @@ export class HomeComponent implements OnInit {
   isAutomaticPaiement: boolean = false;
   lowQuant: number;
 
+  myControl = new FormControl();
+  options: string[] = ['One', 'Two', 'Three'];
+  filteredOptions: Observable<string[]>;
+
+  //Sans APi mais a remplacer ! --- myTeam<Users>
+  member: string;
+  myTeam: MyTeam[] = [];
+
   constructor(public dialog : MatDialog) { }
 
   ngOnInit(): void {
+    //Temps de chargement 
     setTimeout(() => {
       this.globalLoading = false;
-    }, 5000);
+    }, 4000);
+
+    // Permet l'autocompletation d'ajout d'user lorsque première fois sur le site
+    this.filteredOptions = this.myControl.valueChanges.pipe(
+        startWith(''),
+        map(value => this._filter(value))
+      );
   }
+
+  private _filter(value: string): string[] {
+    const filterValue = value.toLowerCase();
+    return this.options.filter(option => option.toLowerCase().includes(filterValue));
+  }
+
+  AddOnTeams(){
+    this.myTeam.push( { name:this.member,statut:'simple' } ); // Ajoute membre à team
+    this.member = ''; //Reset Input
+  }
+
 
 
   startDashboard(){
@@ -37,7 +67,7 @@ export class HomeComponent implements OnInit {
       this.globalLoading = false;
     }, 3000);
     */
-   console.log('pseudo : '+this.pseudo + '| isAlertActivate : '+ this.isAlertActivate + ' | isdarkMade : ' + this.isDarkMode + ' | isPaiment : '+ this.isAutomaticPaiement + ' | lowQuant = '+ this.lowQuant);
+   console.log('pseudo : '+this.pseudo + '| isAlertActivate : '+ this.isAlertActivate + ' | isdarkMade : ' + this.isDarkMode + ' | isPaiment : '+ this.isAutomaticPaiement + ' | lowQuant = '+ this.lowQuant +' | myTeam :' + this.myTeam);
   }
 
 

@@ -97,10 +97,40 @@
                     </mat-step>
                     <!-- step 3 -->
                     <mat-step>
-                        <ng-template matStepLabel>Fill out your name</ng-template>
-                        <p>Step 3</p>
-                        <button mat-button matStepperPrevious>Back</button>
-                        <button mat-button (click)="startDashboard()">Next</button>
+                        <ng-template matStepLabel>Étape n° 3 : Ajouter les membres de votre maison</ng-template>
+                        <p>Pour Finir, veuillez ajouter les membres qui auront accès à votre maison.</p>
+                        <form>
+                            <mat-form-field appearance="outline" class="mr-4">
+                                <input type="text" matInput [matAutocomplete]="auto" [formControl]="myControl" [(ngModel)]="member" placeholder="Ajouter">
+                                <mat-autocomplete #auto="matAutocomplete">
+                                    <mat-option *ngFor="let option of filteredOptions | async" [value]="option">
+                                        {{option}}
+                                    </mat-option>
+                                </mat-autocomplete>
+                            </mat-form-field>
+                            <button type="button" class="btn btn-outline-success" (click)="AddOnTeams()">
+                                <span class="mr-2">Ajouter</span>
+                                <mat-icon style="vertical-align: middle;">add_circle_outline</mat-icon>
+                            </button>
+                        </form>
+
+                        <mat-list class="mb-4">
+                            <mat-list-item *ngFor="let team of myTeam">
+                                <mat-icon>account_circle</mat-icon>
+                                <span class="ml-2" style="vertical-align: top;">{{team.name}}</span>
+                                <span class="ml-2" style="vertical-align: top;">{{team.statut}}</span>
+                                <mat-divider></mat-divider>
+                            </mat-list-item>
+                        </mat-list>
+
+
+                        <button matStepperPrevious class="btn btn-outline-warning mr-2">
+                            <mat-icon style="vertical-align: middle;">arrow_back_ios</mat-icon>
+                            <span class="ml-2">Retour</span>
+                        </button>
+                        <button matStepperNext class="btn btn-outline-primary" (click)="startDashboard()">
+                            <span class="mr-2">Terminer</span>
+                        </button>
                     </mat-step>
                 </mat-vertical-stepper>
             </div>
