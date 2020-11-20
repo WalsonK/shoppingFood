@@ -52,9 +52,24 @@ export class HomeComponent implements OnInit {
     return this.options.filter(option => option.toLowerCase().includes(filterValue));
   }
 
-  AddOnTeams(){
-    this.myTeam.push( { name:this.member,statut:'simple' } ); // Ajoute membre à team
-    this.member = ''; //Reset Input
+  addOnTeams(){
+    if(this.member != undefined){
+      this.myTeam.push( { name:this.member,statut:'Simple',isAdmin:false } ); // Ajoute membre à team
+      this.member = ''; //Reset Input
+    }
+  }
+  switchStatut(index){
+    console.log('Before :' + this.myTeam[index].statut);
+    if(this.myTeam[index].statut == 'Simple'){
+      this.myTeam[index].statut = 'Admin';
+      this.myTeam[index].isAdmin = true;
+    }
+    else if(this.myTeam[index].statut == 'Admin'){
+      this.myTeam[index].statut = 'Simple';
+      this.myTeam[index].isAdmin = false;
+    }
+    console.log('After : ' +this.myTeam[index].statut);
+      
   }
 
 

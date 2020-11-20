@@ -1,5 +1,6 @@
 export interface MyTeam {
 
     name: string;
-    statut: 'simple' | 'admin';
+    statut: 'Simple' | 'Admin';
+    isAdmin:boolean;
 }
