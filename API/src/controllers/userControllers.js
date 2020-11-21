@@ -1,5 +1,6 @@
 const Users = require('../models/userModel'),
-    bcrypt = require('bcrypt');
+    bcrypt = require('bcrypt'),
+    mailer = require('../../mail');
 
 exports.register = async(req, res) => {
     console.time();
@@ -11,8 +12,10 @@ exports.register = async(req, res) => {
         const salt = await bcrypt.genSalt(10) // Création du salt random
         const hash = await bcrypt.hash(req.body.password, salt) // Chiffrement du password
         const isRegister = await Users.registerUser(req.body.firstName, req.body.lastName, req.body.email, hash)
-        if (isRegister == 1)
-            res.json({ error: false, message: 'Inscription réussie' })
+        if (isRegister == 1){
+            //mailer.sendMail()
+            res.json({ error: false, message: 'Inscription réussie' });
+        }
         else
             res.json({ error: true, message: 'Inscription échouée' })
     }
