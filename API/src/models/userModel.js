@@ -14,10 +14,18 @@ exports.registerUser = (firstName, lastName, email, hash) => {
     }) 
 }
 
-exports.loginUser = (email,hash) => {
+exports.checkUser = (email,hash) => {
     return new Promise((resolve, reject) =>{
-        bdd.query('SELECT COUNT(*) as "count" FROM `user` WHERE `email` = ? AND `hash` = ?',{ email: email, hash: hash }, (error, results, fields) =>{
-            resolve(results.insertId)
+        bdd.query('SELECT COUNT(*) as "count" FROM `user` WHERE `email` = ? AND `hash` = ?',[email,hash], (error, results, fields) =>{
+            resolve(results[0].count)
+        });
+    })
+}
+
+exports.getUserId = (email, hash) =>{
+    return new Promise((resolve, reject) =>{
+        bdd.query('SELECT `id` FROM `user` WHERE `email` = ? AND `hash` = ?', [email,hash], (error, results, fields) => {
+            resolve(results.id)
         });
     })
 }

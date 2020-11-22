@@ -20,12 +20,13 @@ let mailOptions = {
     text: 'The sender mail works great !!'
 };
 
- //Step 3
- transporter.sendMail(mailOptions, function(err, data){
+//step 3
+transporter.sendMail(mailOptions, function(err, data){
     if(err)
         console.log('Error :' + err);
     else
         console.log('Email sent !!')
 });
+
            
             //Step 4 : Activate connection of gmail : https://myaccount.google.com/lesssecureapps
