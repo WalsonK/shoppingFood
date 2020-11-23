@@ -36,19 +36,48 @@ export class RegisterComponent implements OnInit {
 
   register(): void {
     // Verification des données saisie. (Vérif. email, champs remplis - trim, ...)
-    this.auth.registerUser(this.firstName, this.lastName, this.email, this.password).subscribe((data: UserRegister) => {
-        if (data.error) {
+     //Trim
+    this.lastName = this.lastName.trim();
+    this.firstName = this.firstName.trim();
+    this.email = this.email.trim();
+    this.password = this.password.trim();
+
+    //email REgex
+    const re = /^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+    var mailValid = re.test(this.email)
+
+    // Verifie champ remplis
+    if(this.firstName === ''){
+      this.snackBar.open('Veuillez renseignez votre prénom !','',{ duration : 2000, panelClass: 'snackbar-danger'});
+    }else if(this.lastName === ''){
+      this.snackBar.open('Veuillez renseignez votre nom !','',{ duration : 2000, panelClass: 'snackbar-danger'});
+    }else if(this.email === ''){
+      this.snackBar.open('Veuillez renseignez votre e-mail !','',{ duration : 2000, panelClass: 'snackbar-danger'});
+    } else if(this.password === ''){
+      this.snackBar.open('Veuillez renseignez un mot de passe !','',{ duration : 2000, panelClass: 'snackbar-danger'});
+    }else {
+
+      //Verif. Email
+      if(!mailValid){ 
+        this.snackBar.open('Votre E-mail est invalide !','',{ duration : 2000, panelClass: 'snackbar-danger'});
+      }else{
+
+        //Register
+        this.auth.registerUser(this.firstName, this.lastName, this.email, this.password).subscribe((data: UserRegister) => {
+          if (data.error) {
             console.log('Inscription échouée : '+ data.message);
             this.snackBar.open(data.message,'',{ duration : 2000, panelClass: 'snackbar-danger'});
-        } else {
+          }else {
             console.log('Goooood boy !!! ' + data.message);
             let snackBarRef = this.snackBar.open(data.message,'',{ duration : 2000, panelClass: 'snackbar-success'});
 
             /*snackBarRef.afterDismissed().subscribe(() => {
               this.reloadPage();
             });*/
-        }
-    });
+          }
+        }); 
+      }
+    }
   }
 
 }

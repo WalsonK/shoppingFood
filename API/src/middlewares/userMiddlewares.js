@@ -1,3 +1,5 @@
+const sendMail = require('../mail/mail');
+
 exports.register = (req, res, next) => {
 
 console.log('Start register')
@@ -23,7 +25,13 @@ console.log('Start register')
     else if (!re.test(String(req.body.email).toLowerCase())) {
         res.json({ error: true, message: 'L\'email est incorrect !' });
     } else{
-        res.json({ error: false, message: 'Inscription réussi !' });
+        //mailer.sendMail();
+        sendMail(req.body.email, req.body.firstName, function(err, data){
+            if(err)
+                res.status(500).json( { message: 'Erreur Interne !'+ err })  //console.log('Error :' + err);
+            else
+            res.status(200).json({ error: false, message: 'Inscription réussi + mail ok !' });
+        });
         next();
     }
         
