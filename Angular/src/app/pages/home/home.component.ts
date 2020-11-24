@@ -53,7 +53,8 @@ export class HomeComponent implements OnInit {
   }
 
   addOnTeams(){
-    if(this.member != undefined){
+    this.member = this.member.trim();
+    if(this.member != ''){
       this.myTeam.push( { name:this.member,statut:'Simple',isAdmin:false } ); // Ajoute membre à team
       this.member = ''; //Reset Input
     }
@@ -75,13 +76,13 @@ export class HomeComponent implements OnInit {
 
 
   startDashboard(){
-    this.isFirstConnection = false;
+    /*this.isFirstConnection = false;
     this.globalLoading = true;
 
     setTimeout(() => {
       this.globalLoading = false;
     }, 3000);
-    
+    */
    console.log('pseudo : '+this.pseudo + '| isAlertActivate : '+ this.isAlertActivate + ' | isdarkMade : ' + this.isDarkMode + ' | isPaiment : '+ this.isAutomaticPaiement + ' | lowQuant = '+ this.lowQuant +' | myTeam :' + this.myTeam);
   }
 
