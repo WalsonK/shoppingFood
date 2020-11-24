@@ -1,7 +1,7 @@
 <div *ngIf="!isFirstConnection; else firstTimeBlock">
     <div *ngIf="!globalLoading; else notLoadingBlock2">
         <mat-toolbar color="primary" class="mb-4">
-            <span>Shopping Food Application</span>
+            <span><img src="../../../assets/img/logo.svg" id="icon" alt="User Icon" color="#ffff" style="width: 35%;"></span>
         
             <button mat-mini-fab color="primary" id="myProfile" (click)="openDialogSettings()">
                 <mat-icon>face</mat-icon>

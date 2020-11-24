@@ -75,13 +75,13 @@ export class HomeComponent implements OnInit {
 
 
   startDashboard(){
-   /* this.isFirstConnection = false;
+    this.isFirstConnection = false;
     this.globalLoading = true;
 
     setTimeout(() => {
       this.globalLoading = false;
     }, 3000);
-    */
+    
    console.log('pseudo : '+this.pseudo + '| isAlertActivate : '+ this.isAlertActivate + ' | isdarkMade : ' + this.isDarkMode + ' | isPaiment : '+ this.isAutomaticPaiement + ' | lowQuant = '+ this.lowQuant +' | myTeam :' + this.myTeam);
   }
 
