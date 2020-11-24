@@ -1,5 +1,6 @@
 const Users = require('../models/userModel'),
-    bcrypt = require('bcrypt');
+    bcrypt = require('bcrypt'),
+    jwt = require('jsonwebtoken');
     
 
 exports.register = async(req, res) => {
@@ -28,44 +29,49 @@ exports.register = async(req, res) => {
 exports.login = async(req, res) => {
     const isExist = await Users.checkEmail(req.body.email)
     if(isExist != 0){
-        const salt = await bcrypt.genSalt(10) // Création du salt random
-        const hash = await bcrypt.hash(req.body.password, salt) // Chiffrement du password
-        const isLogged = await Users.checkUser(req.body.email, hash) // IN error
+        const bddHash = await Users.getPassword(req.body.email);
+        const bddUserId = await Users.getUserId(req.body.email);
+
+        /** Compare stored password with new encrypted password */
+        bcrypt.compare(req.body.password, bddHash, function(err, isMatch) {
+            if (err) {
+                throw err
+            } else if (!isMatch) {
+                console.log("Password doesn't match!");
+                res.json({ error: true, message: 'Mot de passe incorrect'})
+            } else {
+                console.log('Login réussie !')
+                
+                res.status(202).json({
+                    error: false, 
+                    message: 'Connexion Réussie',
+                    userId: bddUserId,
+                    token: jwt.sign(
+                        { userId: bddUserId },
+                        'RANDOM_TOKEN',
+                        { expiresIn: '24h' }
+                    )
+                });
+                    //Reussir a envoyer le token dans authorisation dans le headers
+                console.log(req.headers.authorization)              
+            }
+        });
+
+        /*
         if(isLogged == 1){
             const id = await Users.getUserId(req.body.email, hash);
             //Login script !!
-            res.status(200).json({ 
+            res.json({ 
                 userId: id,
                 token: 'TOKEN'
             })
         }
         else{
-            res.status(401).json({ error: true, message: 'Connexion échouée..' })
-        }
+            res.json({ error: true, message: 'Connexion échouée..' })
+        }*/
     }
     else{
-        res.status(500).json({ error: true, message: 'L\'utilisateur n\'existe pas'});
+        res.json({ error: true, message: 'L\'utilisateur n\'existe pas'});
     }
 
 }
-/*
-exports.login2 = (req, res, next) => {
-    Users.findOne({ email: req.body.email })
-      .then(user => {
-        if (!user) {
-          return res.status(401).json({ error: 'Utilisateur non trouvé !' });
-        }
-        bcrypt.compare(req.body.password, user.password)
-          .then(valid => {
-            if (!valid) {
-              return res.status(401).json({ error: 'Mot de passe incorrect !' });
-            }
-            res.status(200).json({
-              userId: user._id,
-              token: 'TOKEN'
-            });
-          })
-          .catch(error => res.status(500).json({ error }));
-      })
-      .catch(error => res.status(500).json({ error }));
-  };*/

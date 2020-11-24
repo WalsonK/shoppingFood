@@ -22,10 +22,18 @@ exports.checkUser = (email,hash) => {
     })
 }
 
-exports.getUserId = (email, hash) =>{
+exports.getUserId = (email) =>{
     return new Promise((resolve, reject) =>{
-        bdd.query('SELECT `id` FROM `user` WHERE `email` = ? AND `hash` = ?', [email,hash], (error, results, fields) => {
-            resolve(results.id)
+        bdd.query('SELECT `id` FROM `user` WHERE `email` = ?', [email], (error, results, fields) => {
+            resolve(results[0].id)
+        });
+    })
+}
+
+exports.getPassword = (email) => {
+    return new Promise((resolve, reject) =>{
+        bdd.query('SELECT `hash` FROM `user`WHERE `email` = ?', [email], (error, results, fields) =>{
+            resolve(results[0].hash)
         });
     })
 }

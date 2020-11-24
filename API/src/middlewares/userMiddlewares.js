@@ -1,4 +1,5 @@
-const sendMail = require('../mail/mail');
+const sendMail = require('../mail/mail'),
+    jwt = require('jsonwebtoken');
 
 exports.register = (req, res, next) => {
 
@@ -44,18 +45,26 @@ exports.login = (req, res, next) => {
 
 
     if (req.body.email === undefined || req.body.password === undefined) {
-        res.json({ error: true, message: 'Veuillez renseigner les champs !' });
+        res.status(500).json({ error: true, message: 'Veuillez renseigner les champs !' });
     }
     else if (req.body.email.length < 5) {
-        res.json({ error: true, message: 'L\'email est trop courte !' });
+        res.status(500).json({ error: true, message: 'L\'email est trop courte !' });
     }else if (req.body.password.length < 5) {
-        res.json({ error: true, message: 'Le mot de passe est trop court !' });
+        res.status(500).json({ error: true, message: 'Le mot de passe est trop court !' });
     }
     else if (!re.test(String(req.body.email).toLowerCase())) {
-        res.json({ error: true, message: 'L\'email est incorrect !' });
+        res.status(500).json({ error: true, message: 'L\'email est incorrect !' });
     } else{
-        res.json({ error: false, message: 'Connection réussi au middleware !' });
+        //res.status(200).json({ error: false, message: 'Connection réussi au middleware !' });
         next();
     }
 
+}
+exports.auth = (req, res, next) => {
+    try{
+        const token = req.headers.authorization.split()[1];
+    }
+    catch (error){
+        res.status(401).json({error: error | 'Requete non authentifier'})
+    }
 }
