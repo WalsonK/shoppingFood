@@ -53,22 +53,9 @@ exports.login = async(req, res) => {
                     )
                 });
                     //Reussir a envoyer le token dans authorisation dans le headers
-                console.log(req.headers.authorization)              
+                             
             }
         });
-
-        /*
-        if(isLogged == 1){
-            const id = await Users.getUserId(req.body.email, hash);
-            //Login script !!
-            res.json({ 
-                userId: id,
-                token: 'TOKEN'
-            })
-        }
-        else{
-            res.json({ error: true, message: 'Connexion échouée..' })
-        }*/
     }
     else{
         res.json({ error: true, message: 'L\'utilisateur n\'existe pas'});

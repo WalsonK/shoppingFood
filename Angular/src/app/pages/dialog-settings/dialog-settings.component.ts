@@ -1,5 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { dateInputsHaveChanged } from '@angular/material/datepicker/datepicker-input-base';
+import { Router } from '@angular/router';
+import { AuthService } from 'src/app/services/auth.service';
+
 
 @Component({
   selector: 'app-dialog-settings',
@@ -51,7 +54,7 @@ export class DialogSettingsComponent implements OnInit {
     }
   ];
 
-  constructor() { }
+  constructor(private auth: AuthService,private router: Router) { }
 
   ngOnInit(): void {
   }
@@ -113,6 +116,10 @@ export class DialogSettingsComponent implements OnInit {
   validateCard(id){
     this.cards[id].isEdit = false;
     console.log(this.cards[id].cvv);
+  }
+  userLogout(){
+    this.auth.logout();
+    this.router.navigate(['/connexion']);
   }
 
 }

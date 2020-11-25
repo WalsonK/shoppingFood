@@ -32,8 +32,16 @@ exports.getUserId = (email) =>{
 
 exports.getPassword = (email) => {
     return new Promise((resolve, reject) =>{
-        bdd.query('SELECT `hash` FROM `user`WHERE `email` = ?', [email], (error, results, fields) =>{
+        bdd.query('SELECT `hash` FROM `user` WHERE `email` = ?', [email], (error, results, fields) =>{
             resolve(results[0].hash)
+        });
+    })
+}
+
+exports.checkId = (id) => {
+    return new Promise((resolve, reject) => {
+        bdd.query('SELECT COUNT(*) as "count" FROM `user` WHERE `id` = ?', [id], (error, results, fields) => {
+            resolve(results[0].count)
         });
     })
 }

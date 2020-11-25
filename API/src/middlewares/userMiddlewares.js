@@ -1,4 +1,5 @@
 const sendMail = require('../mail/mail'),
+    Users = require('../models/userModel'),
     jwt = require('jsonwebtoken');
 
 exports.register = (req, res, next) => {
@@ -63,8 +64,17 @@ exports.login = (req, res, next) => {
 exports.auth = (req, res, next) => {
     try{
         const token = req.headers.authorization.split()[1];
+        const decodedToken = jwt.verify(token, 'RANDOM_TOKEN');
+        const userId = decodedToken.userId;
+        console.log(req.param('id'));
+        if(req.body.userId && req.body.userId != userId){
+            throw 'User Id non valable';
+        }else{
+            res.status(200).json({error: false, message: 'Ok'});
+            //next()
+        }
     }
     catch (error){
-        res.status(401).json({error: error | 'Requete non authentifier'})
+        res.status(401).json({error: true, message: 'Requete non authentifier'})
     }
 }

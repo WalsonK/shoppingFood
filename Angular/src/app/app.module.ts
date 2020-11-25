@@ -35,10 +35,11 @@ import { RoomListComponent } from './pages/room-list/room-list.component';
 import { HomeComponent } from './pages/home/home.component';
 import { ShopListComponent } from './pages/shop-list/shop-list.component';
 
-import { PersonServiceService } from './services/person-service.service';
+
+import { AuthService } from './services/auth.service';
 import { RoomsComponent } from './pages/rooms/rooms.component';
 import { ItemsComponent } from './pages/items/items.component';
-import { HttpClientModule } from '@angular/common/http';
+import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { DialogAddItemComponent } from './pages/dialog-add-item/dialog-add-item.component';
 import { DialogSettingsComponent } from './pages/dialog-settings/dialog-settings.component';
@@ -91,7 +92,7 @@ import { LoadingcardComponent } from './pages/loadingcard/loadingcard.component'
     BrowserAnimationsModule
   ],
   providers: [
-    PersonServiceService,
+    { provide: HTTP_INTERCEPTORS, useClass: AuthService, multi: true },
   ],
   bootstrap: [AppComponent]
 })

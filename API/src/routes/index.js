@@ -3,6 +3,9 @@ const routes = require('express').Router(), // Chargement d'express Router
     userMiddelware = require('../middlewares/userMiddlewares'); // Chargement du middelware User
 
 routes.post('/register', userMiddelware.register, user.register);
-routes.post('/login', userMiddelware.login, user.login); 
+routes.post('/login', userMiddelware.login, user.login);
+
+routes.get('/home/:id', userMiddelware.auth);
+
 
 module.exports = routes; // Export des routes

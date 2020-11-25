@@ -6,7 +6,10 @@ import { DialogSettingsComponent } from 'src/app/pages/dialog-settings/dialog-se
 import { LoadingcardComponent } from 'src/app/pages/loadingcard/loadingcard.component';
 import { Observable } from 'rxjs';
 import { map, startWith } from 'rxjs/operators';
+import { AuthService } from 'src/app/services/auth.service';
 import { MyTeam } from 'src/app/interfaces/my-team'; //Myteam interface
+import { UserLogin } from 'src/app/interfaces/user';
+import { MatSnackBar } from '@angular/material/snack-bar';
 
 @Component({
   selector: 'app-home',
@@ -16,7 +19,7 @@ import { MyTeam } from 'src/app/interfaces/my-team'; //Myteam interface
 export class HomeComponent implements OnInit {
 
   globalLoading:boolean = true;
-  isFirstConnection:boolean = true;
+  isFirstConnection:boolean = false;
 
   pseudo: string;
   isAlertActivate: boolean = false;
@@ -32,7 +35,19 @@ export class HomeComponent implements OnInit {
   member: string;
   myTeam: MyTeam[] = [];
 
-  constructor(public dialog : MatDialog) { }
+  constructor(public dialog : MatDialog, private auth: AuthService, private snackBar: MatSnackBar) {
+    const userId = localStorage.getItem('userId');
+    //get data User
+    this.auth.getDashboard().subscribe((data: UserLogin) =>{
+      if(data.error) {
+        console.log('Connexion échouée :' + data.message);
+        this.snackBar.open(data.message,'',{ duration : 2000, panelClass: 'snackbar-danger'});
+      }else{
+        console.log('Ok works good !' + data.message);
+      }
+    })
+
+   }
 
   ngOnInit(): void {
     //Temps de chargement 
@@ -45,6 +60,7 @@ export class HomeComponent implements OnInit {
         startWith(''),
         map(value => this._filter(value))
       );
+
   }
 
   private _filter(value: string): string[] {
@@ -97,5 +113,6 @@ export class HomeComponent implements OnInit {
       console.log('Dialog result: '+result)
     })
   }
+
 
 }
