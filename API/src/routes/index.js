@@ -5,7 +5,7 @@ const routes = require('express').Router(), // Chargement d'express Router
 routes.post('/register', userMiddelware.register, user.register);
 routes.post('/login', userMiddelware.login, user.login);
 
-routes.get('/home/:id', userMiddelware.auth);
+routes.get('/home', userMiddelware.auth, user.getUser);
 
 
 module.exports = routes; // Export des routes

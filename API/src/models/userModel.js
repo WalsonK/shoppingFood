@@ -45,3 +45,11 @@ exports.checkId = (id) => {
         });
     })
 }
+
+exports.getUserInfo = (id) => {
+    return new Promise((resolve, reject) =>{
+        bdd.query('SELECT * FROM `user` WHERE `id` = ?', [id], (error, results, fields) => {
+            resolve(results[0])
+        });
+    })
+}

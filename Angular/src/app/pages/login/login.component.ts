@@ -39,7 +39,6 @@ export class LoginComponent implements OnInit {
 
   login() {
     //login
-    console.log(this.loginEmail, this.loginPassword);
     this.auth.loginUser(this.loginEmail, this.loginPassword).subscribe((data: UserLogin) => {
       if(data.error) {
         console.log('Connexion échouée :' + data.message);

@@ -1,7 +1,8 @@
-<div *ngIf="!isFirstConnection; else firstTimeBlock">
-    <div *ngIf="!globalLoading; else notLoadingBlock2">
+<div *ngIf="!globalLoading; else loadingBlock">
+    <!-- Home Page -->
+    <div *ngIf="!isFirstConnection; else firstTimeBlock">
         <mat-toolbar color="primary" class="mb-4">
-            <span><img src="../../../assets/img/logo.svg" id="icon" alt="User Icon" color="#ffff" style="width: 35%;"></span>
+            <span><img src="../../../assets/img/eazyHomeLogo_white.svg" id="icon" alt="User Icon" color="#ffff" style="width: 14%;"></span>
         
             <button mat-mini-fab color="primary" id="myProfile" (click)="openDialogSettings()">
                 <mat-icon>face</mat-icon>
@@ -10,160 +11,159 @@
         <app-room-list></app-room-list>
         <app-shop-list></app-shop-list>
     </div>
-</div>
 
-<ng-template #firstTimeBlock>
+    <!-- First Connection Page -->
+    <ng-template #firstTimeBlock>
 
-    <div class="card col-9 mx-auto mt-5" *ngIf="!globalLoading; else notLoadingBlock">
-        <div class="card-body">
-            <h1 class="card-title">Préferences</h1>
-            <div class="card-text">
-                <p>Pour configurer votre compte nous avons besoin de quelques informations</p>
-
-                <mat-vertical-stepper>
-                    <!-- step 1 -->
-                    <mat-step>
-                        <ng-template matStepLabel>Étape n° 1 : Choix du Pseudo</ng-template>
-                        <p>Veuillez choisir un pseudo, c'est ce qui permettra aux autres utilisateurs de vous retrouver ?</p>
-                        <div class="input-group flex-nowrap form-group col-6">
-                            <div class="input-group-prepend">
-                              <span class="input-group-text" id="addon-wrapping">@</span>
+        <div class="card col-9 mx-auto mt-5" *ngIf="!globalLoading; else notLoadingBlock">
+            <div class="card-body">
+                <h1 class="card-title">Préferences</h1>
+                <div class="card-text">
+                    <p>Pour configurer votre compte nous avons besoin de quelques informations</p>
+    
+                    <mat-vertical-stepper>
+                        <!-- step 1 -->
+                        <mat-step>
+                            <ng-template matStepLabel>Étape n° 1 : Choix du Pseudo</ng-template>
+                            <p>Veuillez choisir un pseudo, c'est ce qui permettra aux autres utilisateurs de vous retrouver ?</p>
+                            <div class="input-group flex-nowrap form-group col-6">
+                                <div class="input-group-prepend">
+                                  <span class="input-group-text" id="addon-wrapping">@</span>
+                                </div>
+                                <input type="text" class="form-control" placeholder="Pseudo" name="pseudo" [(ngModel)]="pseudo">
                             </div>
-                            <input type="text" class="form-control" placeholder="Pseudo" name="pseudo" [(ngModel)]="pseudo">
+                            <div class="col">
+                                <button matStepperNext class="btn btn-outline-info mx-auto">
+                                    <span class="mr-2">Valider</span>
+                                    <mat-icon style="vertical-align: middle;">arrow_forward_ios</mat-icon>
+                                </button>
+                            </div>
+                        </mat-step>
+                        <!-- Step 2-->
+                        <mat-step>
+                            <ng-template matStepLabel>Étape n° 2 : Choix de vos préferences</ng-template>
+                            <h3>Pour vous facilité votre expérience avec notre application, nous avons besoin de connaitre vos préferences.</h3>
+                            <!-- notifications radio -->
+                    <div class="form-group">
+                        <mat-label class="mr-5">
+                          <mat-icon>notifications</mat-icon>
+                          <span class="ml-2" style="vertical-align: top;">Notifications</span>
+                        </mat-label>
+                        <mat-slide-toggle class="ml-3" color="primary" style="vertical-align: top;" [(ngModel)]="isAlertActivate" name="isAlertActivate"></mat-slide-toggle>
+                      </div>
+                      <!--dark mode radio -->
+                      <div class="form-group">
+                        <mat-label class="mr-5">
+                          <mat-icon>flaky</mat-icon>
+                          <span class="ml-2" style="vertical-align: top;">Mode sombre</span>
+                        </mat-label>
+                        <mat-slide-toggle class="ml-2" color="primary" style="vertical-align: top;" [formControl]="darkModeToggle" [(ngModel)]="isDarkMode" name="isDarkMode"></mat-slide-toggle>
+                      </div>
+                      <!-- low quant/ shop list-->
+                      <div class="form-group">
+                        <p>Veillez régler la quantité minimal pour que le produit s'ajoute automatiquement dans votre liste de courses.</p>
+                        <div class="row">
+                            <!--Input-->
+                            <div class="col-4">
+                                <mat-form-field appearance="outline">
+                                <mat-label>Quantité</mat-label>
+                                <input matInput type="number" placeholder="Quantité" [(ngModel)]="lowQuant" name="lowQuant" max="10" min="0">
+                                </mat-form-field>
+                            </div>
+                          <!--Slider-->
+                          <div class="col-8">
+                            <mat-label class="mr-2">
+                              <mat-icon style="vertical-align: middle;">add_shopping_cart</mat-icon>
+                            </mat-label>
+                            <mat-slider
+                              style="min-width: 90%;"
+                              color="primary"
+                              [(ngModel)]="lowQuant"
+                              thumbLabel
+                              tickInterval="1"
+                              min="0"
+                              max="10">
+                            </mat-slider>
+                          </div>
                         </div>
-                        <div class="col">
-                            <button matStepperNext class="btn btn-outline-info mx-auto">
+                      </div>
+                            <button matStepperPrevious class="btn btn-outline-warning mr-2">
+                                <mat-icon style="vertical-align: middle;">arrow_back_ios</mat-icon>
+                                <span class="ml-2">Retour</span>
+                            </button>
+                            <button matStepperNext class="btn btn-outline-info">
                                 <span class="mr-2">Valider</span>
                                 <mat-icon style="vertical-align: middle;">arrow_forward_ios</mat-icon>
                             </button>
-                        </div>
-                    </mat-step>
-                    <!-- Step 2-->
-                    <mat-step>
-                        <ng-template matStepLabel>Étape n° 2 : Choix de vos préferences</ng-template>
-                        <h3>Pour vous facilité votre expérience avec notre application, nous avons besoin de connaitre vos préferences.</h3>
-                        <!-- notifications radio -->
-                <div class="form-group">
-                    <mat-label class="mr-5">
-                      <mat-icon>notifications</mat-icon>
-                      <span class="ml-2" style="vertical-align: top;">Notifications</span>
-                    </mat-label>
-                    <mat-slide-toggle class="ml-3" color="primary" style="vertical-align: top;" [(ngModel)]="isAlertActivate" name="isAlertActivate"></mat-slide-toggle>
-                  </div>
-                  <!--dark mode radio -->
-                  <div class="form-group">
-                    <mat-label class="mr-5">
-                      <mat-icon>flaky</mat-icon>
-                      <span class="ml-2" style="vertical-align: top;">Mode sombre</span>
-                    </mat-label>
-                    <mat-slide-toggle class="ml-2" color="primary" style="vertical-align: top;" [(ngModel)]="isDarkMode" name="isDarkMode"></mat-slide-toggle>
-                  </div>
-                  <!-- low quant/ shop list-->
-                  <div class="form-group">
-                    <p>Veillez régler la quantité minimal pour que le produit s'ajoute automatiquement dans votre liste de courses.</p>
-                    <div class="row">
-                        <!--Input-->
-                        <div class="col-4">
-                            <mat-form-field appearance="outline">
-                            <mat-label>Quantité</mat-label>
-                            <input matInput type="number" placeholder="Quantité" [(ngModel)]="lowQuant" name="lowQuant" max="10" min="0">
-                            </mat-form-field>
-                        </div>
-                      <!--Slider-->
-                      <div class="col-8">
-                        <mat-label class="mr-2">
-                          <mat-icon style="vertical-align: middle;">add_shopping_cart</mat-icon>
-                        </mat-label>
-                        <mat-slider
-                          style="min-width: 90%;"
-                          color="primary"
-                          [(ngModel)]="lowQuant"
-                          thumbLabel
-                          tickInterval="1"
-                          min="0"
-                          max="10">
-                        </mat-slider>
-                      </div>
-                    </div>
-                  </div>
-                        <button matStepperPrevious class="btn btn-outline-warning mr-2">
-                            <mat-icon style="vertical-align: middle;">arrow_back_ios</mat-icon>
-                            <span class="ml-2">Retour</span>
-                        </button>
-                        <button matStepperNext class="btn btn-outline-info">
-                            <span class="mr-2">Valider</span>
-                            <mat-icon style="vertical-align: middle;">arrow_forward_ios</mat-icon>
-                        </button>
-                    </mat-step>
-                    <!-- step 3 -->
-                    <mat-step>
-                        <ng-template matStepLabel>Étape n° 3 : Ajouter les membres de votre maison</ng-template>
-                        <p class="mb-4">
-                            Pour Finir, veuillez ajouter les membres qui auront accès à votre maison. Puis sélectionner leur niveau de droit :<br><br>
-                            <i>
-                                <b>- Simple</b> : niveau classique, l'utilisateur pourra seulement diminuer les quantités.<br><br>
-                               
-                                <b>- Admin</b> : niveau le plus élevée, l'utilisateur aura les pleins droits.
-                            </i>
-                        </p>
-                        <form>
-                            <mat-form-field appearance="outline" class="mr-4 mt-2">
-                                <input type="text" matInput [matAutocomplete]="auto" [formControl]="myControl" [(ngModel)]="member" placeholder="Ajouter">
-                                <mat-autocomplete #auto="matAutocomplete">
-                                    <mat-option *ngFor="let option of filteredOptions | async" [value]="option">
-                                        {{option}}
-                                    </mat-option>
-                                </mat-autocomplete>
-                            </mat-form-field>
-                            <button type="button" class="btn btn-outline-success" (click)="addOnTeams()">
-                                <span class="mr-2">Ajouter</span>
-                                <mat-icon style="vertical-align: middle;">add_circle_outline</mat-icon>
+                        </mat-step>
+                        <!-- step 3 -->
+                        <mat-step>
+                            <ng-template matStepLabel>Étape n° 3 : Ajouter les membres de votre maison</ng-template>
+                            <p class="mb-4">
+                                Pour Finir, veuillez ajouter les membres qui auront accès à votre maison. Puis sélectionner leur niveau de droit :<br><br>
+                                <i>
+                                    <b>- Simple</b> : niveau classique, l'utilisateur pourra seulement diminuer les quantités.<br><br>
+                                   
+                                    <b>- Admin</b> : niveau le plus élevée, l'utilisateur aura les pleins droits.
+                                </i>
+                            </p>
+                            <form>
+                                <mat-form-field appearance="outline" class="mr-4 mt-2">
+                                    <input type="text" matInput [matAutocomplete]="auto" [formControl]="myControl" [(ngModel)]="member" placeholder="Ajouter">
+                                    <mat-autocomplete #auto="matAutocomplete">
+                                        <mat-option *ngFor="let option of filteredOptions | async" [value]="option">
+                                            {{option}}
+                                        </mat-option>
+                                    </mat-autocomplete>
+                                </mat-form-field>
+                                <button type="button" class="btn btn-outline-success" (click)="addOnTeams()">
+                                    <span class="mr-2">Ajouter</span>
+                                    <mat-icon style="vertical-align: middle;">add_circle_outline</mat-icon>
+                                </button>
+                            </form>
+    
+                            <mat-list class="mb-4">
+                                <mat-list-item *ngFor="let team of myTeam; index as i" class="row">
+                                    <div class="col-9">
+                                        <mat-icon>account_circle</mat-icon>
+                                        <span class="ml-2" style="vertical-align: top;">{{team.name}}</span>
+                                    </div>
+                                    <div class="col-4">
+                                        <span class="mr-4" [ngClass]="{'text-primary' : team.isAdmin}">
+                                            <b>{{team.statut}}</b>
+                                        </span>
+                                        <button type="button" class="btn btn-outline-dark" (click)="switchStatut(i)">
+                                            <mat-icon style="vertical-align: middle;">cached</mat-icon>
+                                        </button>
+                                    </div>
+                                    <mat-divider></mat-divider>
+                                </mat-list-item>
+                            </mat-list>
+    
+    
+                            <button matStepperPrevious class="btn btn-outline-warning mr-2">
+                                <mat-icon style="vertical-align: middle;">arrow_back_ios</mat-icon>
+                                <span class="ml-2">Retour</span>
                             </button>
-                        </form>
-
-                        <mat-list class="mb-4">
-                            <mat-list-item *ngFor="let team of myTeam; index as i" class="row">
-                                <div class="col-9">
-                                    <mat-icon>account_circle</mat-icon>
-                                    <span class="ml-2" style="vertical-align: top;">{{team.name}}</span>
-                                </div>
-                                <div class="col-4">
-                                    <span class="mr-4" [ngClass]="{'text-primary' : team.isAdmin}">
-                                        <b>{{team.statut}}</b>
-                                    </span>
-                                    <button type="button" class="btn btn-outline-dark" (click)="switchStatut(i)">
-                                        <mat-icon style="vertical-align: middle;">cached</mat-icon>
-                                    </button>
-                                </div>
-                                <mat-divider></mat-divider>
-                            </mat-list-item>
-                        </mat-list>
-
-
-                        <button matStepperPrevious class="btn btn-outline-warning mr-2">
-                            <mat-icon style="vertical-align: middle;">arrow_back_ios</mat-icon>
-                            <span class="ml-2">Retour</span>
-                        </button>
-                        <button matStepperNext class="btn btn-outline-primary" (click)="startDashboard()">
-                            <span class="mr-2">Terminer</span>
-                        </button>
-                    </mat-step>
-                </mat-vertical-stepper>
+                            <button matStepperNext class="btn btn-outline-primary" (click)="startDashboard()">
+                                <span class="mr-2">Terminer</span>
+                            </button>
+                        </mat-step>
+                    </mat-vertical-stepper>
+                </div>
             </div>
         </div>
-    </div>
-
-    <ng-template #notLoadingBlock>
-        <app-loadingcard></app-loadingcard>
+    
+        
+    
+        <svg id="clouds" alt="Gray Clouds Background" xmlns="http://www.w3.org/2000/svg" width="2611.084" height="485.677" viewBox="0 0 2611.084 485.677">
+            <path id="Path_39" data-name="Path 39" d="M2379.709,863.793c10-93-77-171-168-149-52-114-225-105-264,15-75,3-140,59-152,133-30,2.83-66.725,9.829-93.5,26.25-26.771-16.421-63.5-23.42-93.5-26.25-12-74-77-130-152-133-39-120-212-129-264-15-54.084-13.075-106.753,9.173-138.488,48.9-31.734-39.726-84.4-61.974-138.487-48.9-52-114-225-105-264,15a162.027,162.027,0,0,0-103.147,43.044c-30.633-45.365-87.1-72.091-145.206-58.044-52-114-225-105-264,15-75,3-140,59-152,133-53,5-127,23-130,83-2,42,35,72,70,86,49,20,106,18,157,5a165.625,165.625,0,0,0,120,0c47,94,178,113,251,33,61.112,8.015,113.854-5.72,150.492-29.764a165.62,165.62,0,0,0,110.861-3.236c47,94,178,113,251,33,31.385,4.116,60.563,2.495,86.487-3.311,25.924,5.806,55.1,7.427,86.488,3.311,73,80,204,61,251-33a165.625,165.625,0,0,0,120,0c51,13,108,15,157-5a147.188,147.188,0,0,0,33.5-18.694,147.217,147.217,0,0,0,33.5,18.694c49,20,106,18,157,5a165.625,165.625,0,0,0,120,0c47,94,178,113,251,33C2446.709,1093.793,2554.709,922.793,2379.709,863.793Z" transform="translate(142.69 -634.312)" fill="#eee"/>
+        </svg>
+    
     </ng-template>
 
-    <svg id="clouds" alt="Gray Clouds Background" xmlns="http://www.w3.org/2000/svg" width="2611.084" height="485.677" viewBox="0 0 2611.084 485.677">
-        <path id="Path_39" data-name="Path 39" d="M2379.709,863.793c10-93-77-171-168-149-52-114-225-105-264,15-75,3-140,59-152,133-30,2.83-66.725,9.829-93.5,26.25-26.771-16.421-63.5-23.42-93.5-26.25-12-74-77-130-152-133-39-120-212-129-264-15-54.084-13.075-106.753,9.173-138.488,48.9-31.734-39.726-84.4-61.974-138.487-48.9-52-114-225-105-264,15a162.027,162.027,0,0,0-103.147,43.044c-30.633-45.365-87.1-72.091-145.206-58.044-52-114-225-105-264,15-75,3-140,59-152,133-53,5-127,23-130,83-2,42,35,72,70,86,49,20,106,18,157,5a165.625,165.625,0,0,0,120,0c47,94,178,113,251,33,61.112,8.015,113.854-5.72,150.492-29.764a165.62,165.62,0,0,0,110.861-3.236c47,94,178,113,251,33,31.385,4.116,60.563,2.495,86.487-3.311,25.924,5.806,55.1,7.427,86.488,3.311,73,80,204,61,251-33a165.625,165.625,0,0,0,120,0c51,13,108,15,157-5a147.188,147.188,0,0,0,33.5-18.694,147.217,147.217,0,0,0,33.5,18.694c49,20,106,18,157,5a165.625,165.625,0,0,0,120,0c47,94,178,113,251,33C2446.709,1093.793,2554.709,922.793,2379.709,863.793Z" transform="translate(142.69 -634.312)" fill="#eee"/>
-    </svg>
+</div>
 
-</ng-template>
-
-
-<ng-template #notLoadingBlock2>
+<ng-template #loadingBlock>
     <app-loadingcard></app-loadingcard>
 </ng-template>

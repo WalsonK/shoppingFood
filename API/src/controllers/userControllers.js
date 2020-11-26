@@ -52,7 +52,6 @@ exports.login = async(req, res) => {
                         { expiresIn: '24h' }
                     )
                 });
-                    //Reussir a envoyer le token dans authorisation dans le headers
                              
             }
         });
@@ -61,4 +60,30 @@ exports.login = async(req, res) => {
         res.json({ error: true, message: 'L\'utilisateur n\'existe pas'});
     }
 
+}
+
+exports.getUser = async(req, res) => {
+    const token = req.headers.authorization.split(' ')[1];
+    const decodedToken = jwt.verify(token, 'RANDOM_TOKEN');
+    const userId = decodedToken.userId;
+    const userExist = await Users.checkId(userId);
+    if(userExist != 1){
+        res.status(401).json({error: true, message: 'Utilisateur Non reconnu'})
+    }else{
+        const user = await Users.getUserInfo(userId);
+        res.status(200).json({
+            error: false,
+            message: 'Connected',
+            userId: user.id,
+            userEmail: user.email,
+            userFirstName: user.firstName,
+            userLastName: user.lastName,
+            userPseudo: user.pseudo,
+            firstConnection: user.isFirstConnection,
+            isAlertActivate: user.isAlertActivate,
+            userlowQuant: user.lowQuant
+        })
+    }
+
+    //getUserInfo
 }

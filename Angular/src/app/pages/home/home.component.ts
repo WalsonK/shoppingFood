@@ -8,7 +8,7 @@ import { Observable } from 'rxjs';
 import { map, startWith } from 'rxjs/operators';
 import { AuthService } from 'src/app/services/auth.service';
 import { MyTeam } from 'src/app/interfaces/my-team'; //Myteam interface
-import { UserLogin } from 'src/app/interfaces/user';
+import { UserLogin, UserRegister } from 'src/app/interfaces/user';
 import { MatSnackBar } from '@angular/material/snack-bar';
 
 @Component({
@@ -19,13 +19,15 @@ import { MatSnackBar } from '@angular/material/snack-bar';
 export class HomeComponent implements OnInit {
 
   globalLoading:boolean = true;
-  isFirstConnection:boolean = false;
 
+  isFirstConnection:boolean;
   pseudo: string;
-  isAlertActivate: boolean = false;
+  isAlertActivate: boolean;
   isDarkMode: boolean = false;
   isAutomaticPaiement: boolean = false;
   lowQuant: number;
+
+  darkModeToggle = new FormControl({ value: '', disabled: true });
 
   myControl = new FormControl();
   options: string[] = ['One', 'Two', 'Three'];
@@ -36,30 +38,47 @@ export class HomeComponent implements OnInit {
   myTeam: MyTeam[] = [];
 
   constructor(public dialog : MatDialog, private auth: AuthService, private snackBar: MatSnackBar) {
+    // GET home
     const userId = localStorage.getItem('userId');
     //get data User
-    this.auth.getDashboard().subscribe((data: UserLogin) =>{
+    this.auth.getDashboard().subscribe((data: any) =>{
       if(data.error) {
         console.log('Connexion échouée :' + data.message);
         this.snackBar.open(data.message,'',{ duration : 2000, panelClass: 'snackbar-danger'});
       }else{
-        console.log('Ok works good !' + data.message);
-      }
-    })
+        console.log('Ok redirect home works good !' );
+        this.pseudo = data.userPseudo;
+        this.lowQuant = data.userlowQuant;
 
+        //First Connection
+        if(data.firstConnection){
+          this.isFirstConnection = true;
+          //Temps de chargement 
+          setTimeout(() => {
+            this.globalLoading = false;
+          }, 2000);
+        }else{
+          this.isFirstConnection = false;
+          //Temps de chargement 
+          setTimeout(() => {
+            this.globalLoading = false;
+          }, 2000);
+        }
+
+        if(data.isAlertActivate)
+          this.isAlertActivate = data.isAlertActivate;
+        
+      }
+    });
    }
 
   ngOnInit(): void {
-    //Temps de chargement 
-    setTimeout(() => {
-      this.globalLoading = false;
-    }, 4000);
 
     // Permet l'autocompletation d'ajout d'user lorsque première fois sur le site
     this.filteredOptions = this.myControl.valueChanges.pipe(
         startWith(''),
         map(value => this._filter(value))
-      );
+    );
 
   }
 
@@ -99,7 +118,7 @@ export class HomeComponent implements OnInit {
       this.globalLoading = false;
     }, 3000);
     */
-   console.log('pseudo : '+this.pseudo + '| isAlertActivate : '+ this.isAlertActivate + ' | isdarkMade : ' + this.isDarkMode + ' | isPaiment : '+ this.isAutomaticPaiement + ' | lowQuant = '+ this.lowQuant +' | myTeam :' + this.myTeam);
+   console.log('pseudo : '+this.pseudo + '| isAlertActivate : '+ this.isAlertActivate + ' | isdarkMade : ' + this.isDarkMode + ' | isPaiment : ' + ' | lowQuant = '+ this.lowQuant +' | myTeam :' + this.myTeam);
   }
 
 
