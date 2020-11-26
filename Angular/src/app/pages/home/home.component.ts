@@ -21,6 +21,7 @@ export class HomeComponent implements OnInit {
   globalLoading:boolean = true;
 
   isFirstConnection:boolean;
+  email: string;
   pseudo: string;
   isAlertActivate: boolean;
   isDarkMode: boolean = false;
@@ -47,6 +48,7 @@ export class HomeComponent implements OnInit {
         this.snackBar.open(data.message,'',{ duration : 2000, panelClass: 'snackbar-danger'});
       }else{
         console.log('Ok redirect home works good !' );
+        this.email = data.userEmail;
         this.pseudo = data.userPseudo;
         this.lowQuant = data.userlowQuant;
 
@@ -126,10 +128,34 @@ export class HomeComponent implements OnInit {
     let dialogRef = this.dialog.open(DialogSettingsComponent,{
       height: '90%',
       width: '80%',
+      data: { 
+        email: this.email,
+        pseudo: this.pseudo,
+        isAlertActivate: this.isAlertActivate,
+        lowQuant: this.lowQuant,
+       },
     });
 
     dialogRef.afterClosed().subscribe(result => {
-      console.log('Dialog result: '+result)
+      if(result != undefined){
+        //update data in Local !
+        this.email = result.email;
+        this.pseudo = result.pseudo;
+        this.isAlertActivate = result.alert;
+        this.lowQuant = result.lowQuant;
+
+        //update data for bdd !
+        this.auth.updateUser(this.email, this.pseudo, this.isAlertActivate, this.lowQuant).subscribe((data: any) =>{
+          if(data.error) {
+            console.log('Modification échouée :' + data.message);
+            this.snackBar.open(data.message,'',{ duration : 2000, panelClass: 'snackbar-danger'});
+          }else{
+
+          }
+        })
+      }else{
+        console.log('Pas de modif ! ')
+      }
     })
   }
 

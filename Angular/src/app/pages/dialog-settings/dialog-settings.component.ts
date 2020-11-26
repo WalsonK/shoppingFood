@@ -1,6 +1,9 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Inject } from '@angular/core';
+import { MAT_DIALOG_DATA, MatDialogRef, MatDialog} from '@angular/material/dialog';
 import { dateInputsHaveChanged } from '@angular/material/datepicker/datepicker-input-base';
+import { MatSnackBar } from '@angular/material/snack-bar';
 import { Router } from '@angular/router';
+import { stringify } from 'querystring';
 import { AuthService } from 'src/app/services/auth.service';
 
 
@@ -11,10 +14,17 @@ import { AuthService } from 'src/app/services/auth.service';
 })
 export class DialogSettingsComponent implements OnInit {
 
-  public alert:boolean = true;
+
   public darkMode:boolean = false;
   public paiement:boolean = true;
-  public lowQuant:number = 4;
+
+
+  public userData: {
+      email: string,
+      pseudo: string,
+      alert: boolean,
+      lowQuant: number,
+  };
   
   public tabSelected:string;
 
@@ -54,9 +64,27 @@ export class DialogSettingsComponent implements OnInit {
     }
   ];
 
-  constructor(private auth: AuthService,private router: Router) { }
+  constructor(private snackBar: MatSnackBar,
+    public dialogRef: MatDialogRef<DialogSettingsComponent>,
+    @Inject(MAT_DIALOG_DATA) public data: {email: string, pseudo: string, isAlertActivate: boolean, lowQuant:number},
+   private auth: AuthService,
+   private router: Router) { 
+
+    //Data to send
+    this.userData = {
+      email: this.data.email,
+      pseudo: this.data.pseudo,
+      alert: this.data.isAlertActivate,
+      lowQuant: this.data.lowQuant
+    };
+
+  }
 
   ngOnInit(): void {
+    
+  }
+  onNoClick(): void {
+    this.dialogRef.close();
   }
 
   openTab(slectedTab){
@@ -119,7 +147,7 @@ export class DialogSettingsComponent implements OnInit {
   }
   userLogout(){
     this.auth.logout();
-    this.router.navigate(['/connexion']);
+    this.router.navigate(['/']);
   }
 
 }

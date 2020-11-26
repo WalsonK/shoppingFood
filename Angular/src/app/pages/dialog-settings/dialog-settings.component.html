@@ -1,4 +1,4 @@
-<button type="button" class="close mt-n3 mr-n2" mat-dialog-close="false" aria-label="Close">
+<button type="button" class="close mt-n3 mr-n2" (click)="onNoClick()" aria-label="Close">
   <span aria-hidden="true">&times;</span>
 </button>
 <div class="row">
@@ -36,19 +36,19 @@
               <form class="card-text">
                 <div class="form-group">
                   <label for="inputEmail1">Addresse E-mail</label>
-                  <input type="email" class="form-control" id="inputEmail1" aria-describedby="emailHelp"placeholder="kevin.walson@gmail.com" readonly>
+                  <input type="email" class="form-control" id="inputEmail1" aria-describedby="emailHelp" placeholder="{{userData.email}}" name="email" readonly>
                   <small id="emailHelp" class="form-text text-muted">Pour changer d'e-mail, veuillez contacter le support.</small>
                 </div>
                 <div class="input-group flex-nowrap form-group">
                   <div class="input-group-prepend">
                     <span class="input-group-text" id="addon-wrapping">@</span>
                   </div>
-                  <input type="text" class="form-control" placeholder="Pseudo" aria-label="Username" aria-describedby="addon-wrapping">
+                  <input type="text" class="form-control" [(ngModel)]="userData.pseudo" placeholder="Pseudo" aria-label="Username" aria-describedby="addon-wrapping" name="pseudo">
                 </div>
                 <div class="form-group">
                   <label for="exampleInputPassword1">Mot de passe</label>
                   <div class="input-group">
-                    <input [type]="hide ? 'text' : 'password'" class="form-control" id="exampleInputPassword1">
+                    <input [type]="hide ? 'text' : 'password'" class="form-control" id="exampleInputPassword">
                     <div class="input-group-append">
                       <button class="input-group-text" mat-icon-button matSuffix (click)="hide = !hide" [attr.aria-label]="'Hide password'" [attr.aria-pressed]="hide">
                         <mat-icon>{{hide ? 'visibility' : 'visibility_off'}}</mat-icon>
@@ -57,7 +57,7 @@
                   </div>
                 </div>
                 
-                <button type="submit" class="btn btn-outline-primary btn-block" mat-dialog-close="true">Sauvegarder</button>
+                <button type="submit" class="btn btn-outline-primary btn-block" [mat-dialog-close]="userData">Sauvegarder</button>
               </form>
             </div>
           </div>
@@ -239,7 +239,7 @@
                     <mat-icon>notifications</mat-icon>
                     <span class="ml-2" style="vertical-align: top;">Notifications</span>
                   </mat-label>
-                  <mat-slide-toggle class="ml-3" color="primary" style="vertical-align: top;" [(ngModel)]="alert" name="alert"></mat-slide-toggle>
+                  <mat-slide-toggle class="ml-3" color="primary" style="vertical-align: top;" [(ngModel)]="userData.alert" name="alert"></mat-slide-toggle>
                 </div>
                 <!--dark mode radio -->
                 <div class="form-group">
@@ -261,7 +261,7 @@
                       <mat-slider
                         style="min-width: 90%;"
                         color="primary"
-                        [(ngModel)]="lowQuant"
+                        [(ngModel)]="userData.lowQuant"
                         thumbLabel
                         tickInterval="1"
                         min="0"
@@ -272,14 +272,14 @@
                     <div class="col-3">
                       <mat-form-field appearance="outline" class="col">
                         <mat-label>Quantité</mat-label>
-                        <input matInput type="number" placeholder="Quantité" [(ngModel)]="lowQuant" name="lowQuant" max="10" min="0">
+                        <input matInput type="number" placeholder="Quantité" [(ngModel)]="userData.lowQuant" name="lowQuant" max="10" min="0">
                       </mat-form-field>
                     </div>
                   </div>
                 </div>
 
                 <!--Save modification btn-->
-                <button type="submit" class="btn btn-outline-primary btn-block" mat-dialog-close="true">Sauvegarder</button>
+                <button type="submit" class="btn btn-outline-primary btn-block" [mat-dialog-close]="userData">Sauvegarder</button>
               
               </div>
             </div>

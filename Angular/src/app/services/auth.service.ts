@@ -36,10 +36,14 @@ export class AuthService {
     return this.http.get('http://localhost:8001/home', {headers: this.headers})
   }
 
+  updateUser(email: string, pseudo: string, alert: boolean, lowQuant:number){
+    //console.log('ok');
+    return this.http.post('http://localhost:8001/updateUser', {email, pseudo, alert, lowQuant}, {headers: this.headers})
+  }
+
   logout() {
     // remove user from local storage and set current user to null
     localStorage.removeItem('token');
-    this.userSubject.next(null);
   }
 
   intercept(req: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {

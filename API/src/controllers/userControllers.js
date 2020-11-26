@@ -87,3 +87,7 @@ exports.getUser = async(req, res) => {
 
     //getUserInfo
 }
+
+exports.modifyUser = async(req, res) =>{
+    res.status(200).json({error: false, message: 'Ok to middleware'})
+}
