@@ -53,3 +53,12 @@ exports.getUserInfo = (id) => {
         });
     })
 }
+
+exports.updateUser = (pseudo, alert, lowQuant, email) => {
+    return new Promise((resolve, reject) =>{
+        bdd.query('UPDATE `user` SET `pseudo` = ?, `isAlertActivate` = ?, `lowQuant` = ? WHERE `email` = ?', 
+        [pseudo, alert, lowQuant, email], (error, results, fields) =>{
+            resolve(results.changedRows)
+        })
+    })
+}

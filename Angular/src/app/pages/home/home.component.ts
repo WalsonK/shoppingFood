@@ -150,7 +150,7 @@ export class HomeComponent implements OnInit {
             console.log('Modification échouée :' + data.message);
             this.snackBar.open(data.message,'',{ duration : 2000, panelClass: 'snackbar-danger'});
           }else{
-
+            this.snackBar.open(data.message,'',{ duration : 2000, panelClass: 'snackbar-success'});
           }
         })
       }else{
