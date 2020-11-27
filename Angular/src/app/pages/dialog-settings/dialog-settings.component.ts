@@ -151,7 +151,8 @@ export class DialogSettingsComponent implements OnInit {
   }
   userLogout(){
     this.auth.logout();
-    this.router.navigate(['/']);
+    this.dialogRef.close();
+    this.router.navigate(['/connexion']);
   }
 
 }

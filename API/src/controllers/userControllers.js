@@ -63,12 +63,10 @@ exports.login = async(req, res) => {
 }
 
 exports.getUser = async(req, res) => {
-    const token = req.headers.authorization.split(' ')[1];
-    const decodedToken = jwt.verify(token, 'RANDOM_TOKEN');
-    const userId = decodedToken.userId;
+    const userId = req.body.id;
     const userExist = await Users.checkId(userId);
     if(userExist != 1){
-        res.status(401).json({error: true, message: 'Utilisateur Non reconnu'})
+        res.status(400).json({error: true, message: 'Utilisateur Non reconnu'})
     }else{
         const user = await Users.getUserInfo(userId);
         res.status(200).json({

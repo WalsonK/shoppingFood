@@ -63,14 +63,16 @@ exports.login = (req, res, next) => {
 }
 exports.auth = (req, res, next) => {
     try{
-        
-        if(req.headers.authorization != undefined){
+        const token = req.headers.authorization.split(' ')[1];
+        const decodedToken = jwt.verify(token, 'RANDOM_TOKEN');
+        const id = decodedToken.userId;
+        if(req.body.id == id){
             next();
         }else{
             res.status(401).json({error: true, message: 'Requete non authentifier'});
         }
     }
     catch (error){
-        res.status(401).json({error: true, message: error})
+        res.status(200).json({error: true, message: 'Veuillez vous authentifier'})
     }
 }

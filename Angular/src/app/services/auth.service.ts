@@ -32,18 +32,19 @@ export class AuthService {
     return this.http.post<UserLogin>('http://localhost:8001/login', {email, password}, {headers: this.headers})
   }
 
-  getDashboard(){
-    return this.http.get('http://localhost:8001/home', {headers: this.headers})
+  getDashboard(id: number){
+    return this.http.post('http://localhost:8001/home', {id}, {headers: this.headers})
   }
 
-  updateUser(email: string, firstName: string, lastName: string,pseudo: string, alert: boolean, lowQuant:number){
+  updateUser(id: number, email: string, firstName: string, lastName: string, pseudo: string, alert: boolean, lowQuant:number){
     //console.log('ok');
-    return this.http.post('http://localhost:8001/updateUser', {email, firstName, lastName, pseudo, alert, lowQuant}, {headers: this.headers})
+    return this.http.post('http://localhost:8001/updateUser', {id, email, firstName, lastName, pseudo, alert, lowQuant}, {headers: this.headers})
   }
 
   logout() {
     // remove user from local storage and set current user to null
     localStorage.removeItem('token');
+    localStorage.removeItem('userId');
   }
 
   intercept(req: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {

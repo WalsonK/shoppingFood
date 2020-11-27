@@ -10,6 +10,7 @@ import { AuthService } from 'src/app/services/auth.service';
 import { MyTeam } from 'src/app/interfaces/my-team'; //Myteam interface
 import { UserLogin, UserRegister } from 'src/app/interfaces/user';
 import { MatSnackBar } from '@angular/material/snack-bar';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-home',
@@ -21,6 +22,7 @@ export class HomeComponent implements OnInit {
   globalLoading:boolean = true;
 
   isFirstConnection:boolean;
+  userId: number;
   email: string;
   firstName: string;
   lastName: string;
@@ -40,14 +42,16 @@ export class HomeComponent implements OnInit {
   member: string;
   myTeam: MyTeam[] = [];
 
-  constructor(public dialog : MatDialog, private auth: AuthService, private snackBar: MatSnackBar) {
-    // GET home
-    const userId = localStorage.getItem('userId');
+  constructor(public dialog : MatDialog, private auth: AuthService, private snackBar: MatSnackBar, private router: Router) {
+    //Get Id
+    this.userId = parseInt(localStorage.getItem('userId'), 10);
+
     //get data User
-    this.auth.getDashboard().subscribe((data: any) =>{
+    this.auth.getDashboard(this.userId).subscribe((data: any) =>{
       if(data.error) {
         console.log('Connexion échouée :' + data.message);
         this.snackBar.open(data.message,'',{ duration : 2000, panelClass: 'snackbar-danger'});
+        this.router.navigate(['/connexion']);
       }else{
         console.log('Ok redirect home works good !' );
         this.email = data.userEmail;
@@ -153,7 +157,7 @@ export class HomeComponent implements OnInit {
         this.lowQuant = result.lowQuant;
 
         //update data for bdd !
-        this.auth.updateUser(this.email, this.firstName, this.lastName, this.pseudo, this.isAlertActivate, this.lowQuant).subscribe((data: any) =>{
+        this.auth.updateUser(this.userId,this.email, this.firstName, this.lastName, this.pseudo, this.isAlertActivate, this.lowQuant).subscribe((data: any) =>{
           if(data.error) {
             console.log('Modification échouée :' + data.message);
             this.snackBar.open(data.message,'',{ duration : 2000, panelClass: 'snackbar-danger'});
