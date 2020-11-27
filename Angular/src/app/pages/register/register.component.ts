@@ -71,9 +71,9 @@ export class RegisterComponent implements OnInit {
             console.log('Goooood boy !!! ' + data.message);
             let snackBarRef = this.snackBar.open(data.message,'',{ duration : 2000, panelClass: 'snackbar-success'});
 
-            /*snackBarRef.afterDismissed().subscribe(() => {
+            snackBarRef.afterDismissed().subscribe(() => {
               this.reloadPage();
-            });*/
+            });
           }
         }); 
       }
