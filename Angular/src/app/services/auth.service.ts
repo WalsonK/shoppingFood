@@ -36,9 +36,9 @@ export class AuthService {
     return this.http.get('http://localhost:8001/home', {headers: this.headers})
   }
 
-  updateUser(email: string, pseudo: string, alert: boolean, lowQuant:number){
+  updateUser(email: string, firstName: string, lastName: string,pseudo: string, alert: boolean, lowQuant:number){
     //console.log('ok');
-    return this.http.post('http://localhost:8001/updateUser', {email, pseudo, alert, lowQuant}, {headers: this.headers})
+    return this.http.post('http://localhost:8001/updateUser', {email, firstName, lastName, pseudo, alert, lowQuant}, {headers: this.headers})
   }
 
   logout() {

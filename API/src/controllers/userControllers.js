@@ -89,7 +89,7 @@ exports.getUser = async(req, res) => {
 }
 
 exports.modifyUser = async(req, res) =>{
-    const isUserUpdate = await Users.updateUser(req.body.pseudo, req.body.alert, req.body.lowQuant, req.body.email)
+    const isUserUpdate = await Users.updateUser(req.body.firstName, req.body.lastName, req.body.pseudo, req.body.alert, req.body.lowQuant, req.body.email)
     if(isUserUpdate == 0){
         res.status(304).json({error: true, message: 'Informations non modifiées !'})
     }else{

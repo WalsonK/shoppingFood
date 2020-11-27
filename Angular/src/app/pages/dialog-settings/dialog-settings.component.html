@@ -34,19 +34,33 @@
             <h3 class="card-header">Compte</h3>
             <div class="card-body">
               <form class="card-text">
+                <!-- Email-->
                 <div class="form-group">
-                  <label for="inputEmail1">Addresse E-mail</label>
+                  <label for="inputEmail1">Addresse E-mail :</label>
                   <input type="email" class="form-control" id="inputEmail1" aria-describedby="emailHelp" placeholder="{{userData.email}}" name="email" readonly>
                   <small id="emailHelp" class="form-text text-muted">Pour changer d'e-mail, veuillez contacter le support.</small>
                 </div>
+                <!-- Nom & Prenom -->
+                <div class="form-group row mb-4">
+                  <div class="col">
+                    <label for="first">Prénom :</label>
+                    <input type="text" id="first" class="form-control" name="first" placeholder="Prénom" [(ngModel)]="userData.firstName">
+                  </div>
+                  <div class="col">
+                    <label for="last">Nom :</label>
+                    <input type="text" id="last" class="form-control" name="last" placeholder="Nom" [(ngModel)]="userData.lastName">
+                  </div>
+                </div>
+                <!-- Pseudo -->
                 <div class="input-group flex-nowrap form-group">
                   <div class="input-group-prepend">
                     <span class="input-group-text" id="addon-wrapping">@</span>
                   </div>
-                  <input type="text" class="form-control" [(ngModel)]="userData.pseudo" placeholder="Pseudo" aria-label="Username" aria-describedby="addon-wrapping" name="pseudo">
+                  <input type="text" class="form-control" [(ngModel)]="userData.pseudo" placeholder="Pseudo" aria-label="Username" aria-describedby="addon-wrapping" name="pseudo" id="psuedo">
                 </div>
+                <!-- Mot de Passe -->
                 <div class="form-group">
-                  <label for="exampleInputPassword1">Mot de passe</label>
+                  <label for="exampleInputPassword1">Mot de passe :</label>
                   <div class="input-group">
                     <input [type]="hide ? 'text' : 'password'" class="form-control" id="exampleInputPassword">
                     <div class="input-group-append">

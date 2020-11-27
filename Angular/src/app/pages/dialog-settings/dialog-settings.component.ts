@@ -21,6 +21,8 @@ export class DialogSettingsComponent implements OnInit {
 
   public userData: {
       email: string,
+      firstName: string,
+      lastName: string,
       pseudo: string,
       alert: boolean,
       lowQuant: number,
@@ -66,13 +68,15 @@ export class DialogSettingsComponent implements OnInit {
 
   constructor(private snackBar: MatSnackBar,
     public dialogRef: MatDialogRef<DialogSettingsComponent>,
-    @Inject(MAT_DIALOG_DATA) public data: {email: string, pseudo: string, isAlertActivate: boolean, lowQuant:number},
+    @Inject(MAT_DIALOG_DATA) public data: {email: string, firstName: string, lastName: string, pseudo: string, isAlertActivate: boolean, lowQuant:number},
    private auth: AuthService,
    private router: Router) { 
 
     //Data to send
     this.userData = {
       email: this.data.email,
+      firstName: this.data.firstName,
+      lastName: this.data.lastName,
       pseudo: this.data.pseudo,
       alert: this.data.isAlertActivate,
       lowQuant: this.data.lowQuant

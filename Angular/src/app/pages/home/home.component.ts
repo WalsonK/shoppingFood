@@ -22,6 +22,8 @@ export class HomeComponent implements OnInit {
 
   isFirstConnection:boolean;
   email: string;
+  firstName: string;
+  lastName: string;
   pseudo: string;
   isAlertActivate: boolean;
   isDarkMode: boolean = false;
@@ -49,6 +51,8 @@ export class HomeComponent implements OnInit {
       }else{
         console.log('Ok redirect home works good !' );
         this.email = data.userEmail;
+        this.firstName = data.userFirstName;
+        this.lastName = data.userLastName;
         this.pseudo = data.userPseudo;
         this.lowQuant = data.userlowQuant;
 
@@ -130,6 +134,8 @@ export class HomeComponent implements OnInit {
       width: '80%',
       data: { 
         email: this.email,
+        firstName: this.firstName,
+        lastName: this.lastName,
         pseudo: this.pseudo,
         isAlertActivate: this.isAlertActivate,
         lowQuant: this.lowQuant,
@@ -140,12 +146,14 @@ export class HomeComponent implements OnInit {
       if(result != undefined){
         //update data in Local !
         this.email = result.email;
+        this.firstName = result.firstName;
+        this.lastName = result.lastName;
         this.pseudo = result.pseudo;
         this.isAlertActivate = result.alert;
         this.lowQuant = result.lowQuant;
 
         //update data for bdd !
-        this.auth.updateUser(this.email, this.pseudo, this.isAlertActivate, this.lowQuant).subscribe((data: any) =>{
+        this.auth.updateUser(this.email, this.firstName, this.lastName, this.pseudo, this.isAlertActivate, this.lowQuant).subscribe((data: any) =>{
           if(data.error) {
             console.log('Modification échouée :' + data.message);
             this.snackBar.open(data.message,'',{ duration : 2000, panelClass: 'snackbar-danger'});
