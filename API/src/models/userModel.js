@@ -6,9 +6,18 @@ exports.checkEmail = (email) => {
     })
 }
 
-exports.registerUser = (firstName, lastName, email, hash) => {
+exports.createHouse = () => {
     return new Promise((resolve, reject) => {
-        bdd.query('INSERT INTO user SET ?', { email: email, firstName: firstName, lastName: lastName, hash: hash }, (error, results, fields) => {
+        bdd.query('INSERT INTO `house` (lowQuant) VALUES (?)', [0], (error, results, fields) =>{
+            resolve(results.insertId);
+        })
+    });
+
+}
+
+exports.registerUser = (firstName, lastName, email, hash, houseId) => {
+    return new Promise((resolve, reject) => {
+        bdd.query('INSERT INTO user SET ?', { email: email, firstName: firstName, lastName: lastName, hash: hash, idHouse: houseId}, (error, results, fields) => {
             resolve(results.insertId)
         });
     }) 
@@ -51,6 +60,47 @@ exports.getUserInfo = (id) => {
         bdd.query('SELECT * FROM `user` WHERE `id` = ?', [id], (error, results, fields) => {
             resolve(results[0])
         });
+    })
+}
+
+exports.getAllPseudo = () =>{
+    return new Promise((resolve, reject) =>{
+        bdd.query('SELECT `email` FROM `user`', (error, results, fields) =>{
+            resolve(results)
+        });
+    })
+}
+
+exports.updateFirst = (id, pseudo, alert) =>{
+    return new Promise((resolve, reject) =>{
+        bdd.query('INSERT INTO `user` SET (pseudo, isFirstConnection, isAlertActivate) VALUES (?,?,?) WHERE `id` = ?',
+        [pseudo, 0, alert, id], (error, results, fields) => {
+            resolve(results.insertId)
+        });
+    })
+}
+
+exports.getHouse = (id) =>{
+    return new Promise((resolve, reject) => {
+        bdd.query('SELECT `idHouse` FROM `user` WHERE `id` = ?', [id], (error, results, fields) =>{
+            resolve(results[0].idHouse)
+        })
+    })
+}
+
+exports.setHouseLowQuant = (id, lowQuant) =>{
+    return new Promise((resolve, reject) =>{
+        bdd.query('UPDATE `house` SET `lowQuant` = ? WHERE `idHouse` = ?', [lowQuant, id], (error, results, fields) =>{
+            resolve(results.changedRows)
+        })
+    })
+}
+
+exports.updateFamily = (pseudo, statut, houseId) =>{
+    return new Promise((resolve, reject) =>{
+        bdd.query('UPDATE `user` SET `idHouse` = ? `isAdmin` = ? WHERE `email` = ?', [houseId, statut, pseudo], (error, results, fields) =>{
+            resolve(results.changedRows)
+        })
     })
 }
 

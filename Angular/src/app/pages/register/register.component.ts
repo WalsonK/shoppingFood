@@ -16,6 +16,7 @@ export class RegisterComponent implements OnInit {
   firstName:string;
   lastName: string;
   password:string;
+  houseOwner: boolean = false;
 
 
   constructor(private activitedRoute: ActivatedRoute, private auth: AuthService, private snackBar: MatSnackBar) { 
@@ -55,7 +56,10 @@ export class RegisterComponent implements OnInit {
       this.snackBar.open('Veuillez renseignez votre e-mail !','',{ duration : 2000, panelClass: 'snackbar-danger'});
     } else if(this.password === ''){
       this.snackBar.open('Veuillez renseignez un mot de passe !','',{ duration : 2000, panelClass: 'snackbar-danger'});
-    }else {
+    }else if(this.houseOwner === undefined){
+      this.snackBar.open('Veuillez renseignez si vous possedez une maison !','',{ duration : 2000, panelClass: 'snackbar-danger'});
+    }
+    else {
 
       //Verif. Email
       if(!mailValid){ 
@@ -63,7 +67,7 @@ export class RegisterComponent implements OnInit {
       }else{
 
         //Register
-        this.auth.registerUser(this.firstName, this.lastName, this.email, this.password).subscribe((data: UserRegister) => {
+        this.auth.registerUser(this.houseOwner, this.firstName, this.lastName, this.email, this.password).subscribe((data: UserRegister) => {
           if (data.error) {
             console.log('Inscription échouée : '+ data.message);
             this.snackBar.open(data.message,'',{ duration : 2000, panelClass: 'snackbar-danger'});

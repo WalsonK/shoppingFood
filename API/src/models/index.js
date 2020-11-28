@@ -4,7 +4,7 @@ var connection = mysql.createConnection({
     user: 'root',
     password: 'root', // Mac
     // password: '', // Windows
-    database: "shoppingFoodDb",
+    database: "easyHomeDb",
     port: 3306, // windows : 3306 | mac : 8889
     //socketPath: '/Applications/MAMP/tmp/mysql/mysql.sock' // Uniquement mac
 });

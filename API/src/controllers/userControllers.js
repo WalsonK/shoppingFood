@@ -12,14 +12,25 @@ exports.register = async(req, res) => {
     else {
         const salt = await bcrypt.genSalt(10) // Création du salt random
         const hash = await bcrypt.hash(req.body.password, salt) // Chiffrement du password
-        const isRegister = await Users.registerUser(req.body.firstName, req.body.lastName, req.body.email, hash)
-        if (isRegister === 1){
-            res.json({ error: true, message: 'Inscription échouée' });
-        }
-        else{
-            res.json({ error: false, message: 'Inscription réussie' });
-        }
-           
+        
+        if(req.body.houseOwner === true){
+            const isHouseOwner = await Users.createHouse();
+            const isRegister = await Users.registerUser(req.body.firstName, req.body.lastName, req.body.email, hash, isHouseOwner);
+            if (isRegister === 1){
+                res.json({ error: true, message: 'Inscription échouée' });
+            }
+            else{
+                res.json({ error: false, message: 'Inscription réussie' });
+            }
+        }else{
+            const isRegister = await Users.registerUser(req.body.firstName, req.body.lastName, req.body.email, hash, null);
+            if (isRegister === 1){
+                res.json({ error: true, message: 'Inscription échouée' });
+            }
+            else{
+                res.json({ error: false, message: 'Inscription réussie' });
+            }
+        }  
     }
 
     console.timeEnd();
@@ -69,6 +80,11 @@ exports.getUser = async(req, res) => {
         res.status(400).json({error: true, message: 'Utilisateur Non reconnu'})
     }else{
         const user = await Users.getUserInfo(userId);
+        const resultsArray = await Users.getAllPseudo();
+        const pseudoArray = [];
+        for(var i=0; i < resultsArray.length; i++){
+            pseudoArray[i] = resultsArray[i].email;
+        };
         res.status(200).json({
             error: false,
             message: 'Connected',
@@ -79,11 +95,29 @@ exports.getUser = async(req, res) => {
             userPseudo: user.pseudo,
             firstConnection: user.isFirstConnection,
             isAlertActivate: user.isAlertActivate,
-            userlowQuant: user.lowQuant
+            userlowQuant: user.lowQuant,
+            houseOwner: user.idHouse,
+            usersPseudo: pseudoArray
         })
     }
 
     //getUserInfo
+}
+
+exports.firstConnect = async(req, res) =>{
+    //this.userId, this.pseudo, this.isAlertActivate, this.lowQuant, this.myTeam
+    const userId = req.body.id;
+    const a = await Users.updateFirst(userId, req.body.pseudo, req.body.alert);
+    const houseId = await Users.getHouse(userId);
+    const b = await Users.setHouseLowQuant(houseId, req.body.lowQuant);
+    const c = await Users.updateFamily(req.body.memberPseudo, req.body.memberStatut, houseId);
+    console.log('a ='+ a + ' b='+b+' c='+c);
+    if(a === 1 && b != 0 && c != 0){
+        res.status(304).json({ error: true, message: ' échouée' });
+    }
+    else{
+        res.status(200).json({ error: false, message: ' réussie' });
+    }
 }
 
 exports.modifyUser = async(req, res) =>{

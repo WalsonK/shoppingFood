@@ -44,49 +44,49 @@
                             <ng-template matStepLabel>Étape n° 2 : Choix de vos préferences</ng-template>
                             <h3>Pour vous facilité votre expérience avec notre application, nous avons besoin de connaitre vos préferences.</h3>
                             <!-- notifications radio -->
-                    <div class="form-group">
-                        <mat-label class="mr-5">
-                          <mat-icon>notifications</mat-icon>
-                          <span class="ml-2" style="vertical-align: top;">Notifications</span>
-                        </mat-label>
-                        <mat-slide-toggle class="ml-3" color="primary" style="vertical-align: top;" [(ngModel)]="isAlertActivate" name="isAlertActivate"></mat-slide-toggle>
-                      </div>
-                      <!--dark mode radio -->
-                      <div class="form-group">
-                        <mat-label class="mr-5">
-                          <mat-icon>flaky</mat-icon>
-                          <span class="ml-2" style="vertical-align: top;">Mode sombre</span>
-                        </mat-label>
-                        <mat-slide-toggle class="ml-2" color="primary" style="vertical-align: top;" [formControl]="darkModeToggle" [(ngModel)]="isDarkMode" name="isDarkMode"></mat-slide-toggle>
-                      </div>
-                      <!-- low quant/ shop list-->
-                      <div class="form-group">
-                        <p>Veillez régler la quantité minimal pour que le produit s'ajoute automatiquement dans votre liste de courses.</p>
-                        <div class="row">
-                            <!--Input-->
-                            <div class="col-4">
-                                <mat-form-field appearance="outline">
-                                <mat-label>Quantité</mat-label>
-                                <input matInput type="number" placeholder="Quantité" [(ngModel)]="lowQuant" name="lowQuant" max="10" min="0">
-                                </mat-form-field>
+                            <div class="form-group">
+                                <mat-label class="mr-5">
+                                    <mat-icon>notifications</mat-icon>
+                                    <span class="ml-2" style="vertical-align: top;">Notifications</span>
+                                </mat-label>
+                                <mat-slide-toggle class="ml-3" color="primary" style="vertical-align: top;" [(ngModel)]="isAlertActivate" name="isAlertActivate"></mat-slide-toggle>
                             </div>
-                          <!--Slider-->
-                          <div class="col-8">
-                            <mat-label class="mr-2">
-                              <mat-icon style="vertical-align: middle;">add_shopping_cart</mat-icon>
-                            </mat-label>
-                            <mat-slider
-                              style="min-width: 90%;"
-                              color="primary"
-                              [(ngModel)]="lowQuant"
-                              thumbLabel
-                              tickInterval="1"
-                              min="0"
-                              max="10">
-                            </mat-slider>
-                          </div>
-                        </div>
-                      </div>
+                            <!--dark mode radio -->
+                            <div class="form-group">
+                                <mat-label class="mr-5">
+                                    <mat-icon>flaky</mat-icon>
+                                    <span class="ml-2" style="vertical-align: top;">Mode sombre</span>
+                                </mat-label>
+                                <mat-slide-toggle class="ml-2" color="primary" style="vertical-align: top;" [formControl]="darkModeToggle" [(ngModel)]="isDarkMode" name="isDarkMode"></mat-slide-toggle>
+                            </div>
+                            <!-- low quant/ shop list-->
+                            <div class="form-group">
+                                <p>Veillez régler la quantité minimal pour que le produit s'ajoute automatiquement dans votre liste de courses.</p>
+                                <div class="row">
+                                    <!--Input-->
+                                    <div class="col-4">
+                                        <mat-form-field appearance="outline">
+                                            <mat-label>Quantité</mat-label>
+                                            <input matInput type="number" placeholder="Quantité" [(ngModel)]="lowQuant" name="lowQuant" max="10" min="0">
+                                        </mat-form-field>
+                                    </div>
+                                    <!--Slider-->
+                                    <div class="col-8">
+                                        <mat-label class="mr-2">
+                                            <mat-icon style="vertical-align: middle;">add_shopping_cart</mat-icon>
+                                        </mat-label>
+                                        <mat-slider
+                                            style="min-width: 90%;"
+                                            color="primary"
+                                            [(ngModel)]="lowQuant"
+                                            thumbLabel
+                                            tickInterval="1"
+                                            min="0"
+                                            max="10">
+                                        </mat-slider>
+                                    </div>
+                                </div>
+                            </div>
                             <button matStepperPrevious class="btn btn-outline-warning mr-2">
                                 <mat-icon style="vertical-align: middle;">arrow_back_ios</mat-icon>
                                 <span class="ml-2">Retour</span>
@@ -97,7 +97,7 @@
                             </button>
                         </mat-step>
                         <!-- step 3 -->
-                        <mat-step>
+                        <mat-step *ngIf="isHouseOwner">
                             <ng-template matStepLabel>Étape n° 3 : Ajouter les membres de votre maison</ng-template>
                             <p class="mb-4">
                                 Pour Finir, veuillez ajouter les membres qui auront accès à votre maison. Puis sélectionner leur niveau de droit :<br><br>
@@ -145,9 +145,18 @@
                                 <mat-icon style="vertical-align: middle;">arrow_back_ios</mat-icon>
                                 <span class="ml-2">Retour</span>
                             </button>
+                            <button matStepperNext class="btn btn-outline-info">
+                                <span class="mr-2">Valider</span>
+                                <mat-icon style="vertical-align: middle;">arrow_forward_ios</mat-icon>
+                            </button>
+                        </mat-step>
+                        <!-- Validate Bouton-->
+                        <mat-step>
+                            <ng-template matStepLabel>Étape n° {{isHouseOwner ? '4' : '3'}}: Valider</ng-template>
                             <button matStepperNext class="btn btn-outline-primary" (click)="startDashboard()">
                                 <span class="mr-2">Terminer</span>
                             </button>
+
                         </mat-step>
                     </mat-vertical-stepper>
                 </div>

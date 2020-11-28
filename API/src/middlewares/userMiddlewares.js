@@ -8,8 +8,7 @@ console.log('Start register')
 
     const re = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
 
-
-    if (req.body.email === undefined || req.body.firstName === undefined || req.body.lastName === undefined || req.body.password === undefined) {
+    if (req.body.email === undefined || req.body.firstName === undefined || req.body.lastName === undefined || req.body.password === undefined || req.body.houseOwner === undefined) {
         res.json({ error: true, message: 'Veuillez renseigner les champs !' });
     }
 
@@ -32,7 +31,7 @@ console.log('Start register')
             if(err)
                 res.status(500).json( { message: 'Erreur Interne !'+ err })  //console.log('Error :' + err);
             else
-            res.status(200).json({ error: false, message: 'Inscription réussi + mail ok !' });
+            res.status(200).json({ error: false, message: 'mail ok !' });
         });
         next();
     }

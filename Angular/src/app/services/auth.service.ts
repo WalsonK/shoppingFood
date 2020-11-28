@@ -22,8 +22,8 @@ export class AuthService {
    }
 
 
-  registerUser(firstName: string, lastName: string, email: string, password: string){
-    return this.http.post('http://localhost:8001/register', { firstName, lastName, email, password });
+  registerUser(houseOwner: boolean, firstName: string, lastName: string, email: string, password: string){
+    return this.http.post('http://localhost:8001/register', { houseOwner, firstName, lastName, email, password });
   }
 
 
@@ -34,6 +34,9 @@ export class AuthService {
 
   getDashboard(id: number){
     return this.http.post('http://localhost:8001/home', {id}, {headers: this.headers})
+  }
+  firstConnection(id: number, pseudo: string, alert:boolean, lowQuant: number, memberPseudo: string, memberStatut: boolean){
+    return this.http.post('http://localhost:8001/firstConnect', {id, pseudo, alert, lowQuant, memberPseudo, memberStatut}, {headers: this.headers})
   }
 
   updateUser(id: number, email: string, firstName: string, lastName: string, pseudo: string, alert: boolean, lowQuant:number){

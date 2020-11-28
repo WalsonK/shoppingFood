@@ -14,6 +14,10 @@
         <input type="text" id="last" class="fadeIn second" name="last" placeholder="Nom" [(ngModel)]="lastName">
         <input type="email" id="login" class="fadeIn third" name="login" placeholder="E-mail" [(ngModel)]="email">
         <input type="password" id="password" class="fadeIn fourth" name="password" placeholder="Mot de passe" [(ngModel)]="password">
+        <div class="form-group fadeIn fourth">
+          <mat-label class="mr-2"><mat-icon>home</mat-icon></mat-label>
+          <mat-slide-toggle color="primary"[(ngModel)]="houseOwner" name="houseOwner">Etes vous propriétaire d'une maison ?</mat-slide-toggle>
+        </div>
         <input type="submit" class="fadeIn fourth" value="s'inscrire">
     </form>
 

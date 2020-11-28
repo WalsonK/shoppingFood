@@ -31,16 +31,20 @@ export class HomeComponent implements OnInit {
   isDarkMode: boolean = false;
   isAutomaticPaiement: boolean = false;
   lowQuant: number;
+  isHouseOwner: boolean;
 
   darkModeToggle = new FormControl({ value: '', disabled: true });
 
   myControl = new FormControl();
-  options: string[] = ['One', 'Two', 'Three'];
+  options: string[]; //=['One', 'Two', 'Three'];
+
   filteredOptions: Observable<string[]>;
 
   //Sans APi mais a remplacer ! --- myTeam<Users>
   member: string;
   myTeam: MyTeam[] = [];
+  memberPseudo: string;
+  memberStatut: boolean;
 
   constructor(public dialog : MatDialog, private auth: AuthService, private snackBar: MatSnackBar, private router: Router) {
     //Get Id
@@ -59,6 +63,15 @@ export class HomeComponent implements OnInit {
         this.lastName = data.userLastName;
         this.pseudo = data.userPseudo;
         this.lowQuant = data.userlowQuant;
+        this.options = data.usersPseudo;
+        const houseOwner = data.houseOwner;
+
+        //L'utilsateur possède une maison ?
+        if(houseOwner != null){
+          this.isHouseOwner = true;
+        }
+        else
+          this.isHouseOwner = false;
 
         //First Connection
         if(data.firstConnection){
@@ -80,6 +93,7 @@ export class HomeComponent implements OnInit {
         
       }
     });
+
    }
 
   ngOnInit(): void {
@@ -122,13 +136,29 @@ export class HomeComponent implements OnInit {
 
   startDashboard(){
     /*this.isFirstConnection = false;
-    this.globalLoading = true;
+    
 
     setTimeout(() => {
       this.globalLoading = false;
     }, 3000);
     */
-   console.log('pseudo : '+this.pseudo + '| isAlertActivate : '+ this.isAlertActivate + ' | isdarkMade : ' + this.isDarkMode + ' | isPaiment : ' + ' | lowQuant = '+ this.lowQuant +' | myTeam :' + this.myTeam);
+   this.globalLoading = true;
+   this.memberPseudo = this.myTeam[0].name;
+   this.memberStatut = this.myTeam[0].isAdmin;
+   
+   this.auth.firstConnection(this.userId, this.pseudo, this.isAlertActivate, this.lowQuant, this.memberPseudo, this.memberStatut).subscribe((data: any) =>{
+    if(data.error) {
+      this.globalLoading = false;
+      console.log('first connexion échouée :' + data.message);
+      const snackBarRef = this.snackBar.open(data.message,'',{ duration : 2000, panelClass: 'snackbar-danger'});
+      snackBarRef.afterDismissed().subscribe(() => {
+        document.location.reload(true);
+      });
+    }else{
+      this.globalLoading = false;
+    }
+   });
+    
   }
 
 
