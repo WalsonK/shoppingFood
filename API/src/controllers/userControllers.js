@@ -80,6 +80,9 @@ exports.getUser = async(req, res) => {
         res.status(400).json({error: true, message: 'Utilisateur Non reconnu'})
     }else{
         const user = await Users.getUserInfo(userId);
+        const houseId = await Users.getHouse(userId);
+        const lowQuant = await Users.getHouseLowQuant(houseId);
+
         const resultsArray = await Users.getAllPseudo();
         const pseudoArray = [];
         for(var i=0; i < resultsArray.length; i++){
@@ -95,7 +98,7 @@ exports.getUser = async(req, res) => {
             userPseudo: user.pseudo,
             firstConnection: user.isFirstConnection,
             isAlertActivate: user.isAlertActivate,
-            userlowQuant: user.lowQuant,
+            userlowQuant: lowQuant,
             houseOwner: user.idHouse,
             usersPseudo: pseudoArray
         })
@@ -126,5 +129,39 @@ exports.modifyUser = async(req, res) =>{
         res.status(304).json({error: true, message: 'Informations non modifiées !'})
     }else{
         res.status(200).json({error: false, message: 'Informations mis à jour !'})
+    }
+}
+
+exports.getAllRooms = async(req, res) =>{
+    const userId = req.body.id;
+    const houseId = await Users.getHouse(userId);
+    const roomList = await Users.getAllRoom(houseId);
+    if(roomList == undefined){
+        res.json({error: true, message: 'La liste des pièces n\'as pu être récuperrer !'});
+    }else{
+        res.status(200).json({error: false, roomList: roomList});
+    }
+}
+
+exports.createRoom = async(req, res) =>{
+    const userId = req.body.id;
+    const houseId = await Users.getHouse(userId);
+    const isRoomCreate = await Users.createRoom(req.body.roomName, req.body.lastModif, houseId);
+    if(isRoomCreate != 0){
+        const roomList = await Users.getAllRoom(houseId);
+        res.status(200).json({ error: false, message: 'La pièce a été crée !', roomList: roomList});
+    }
+    else{
+        res.status(304).json({ error: true, message: 'La pièce n\'as pas été crée !'});
+    }
+}
+
+exports.deleteRoom = async(req, res) =>{
+    const isDeleted = await Users.deleteRoom(req.body.idHouse, req.body.idRoom);
+    if(isDeleted != 0){
+        const roomList = await Users.getAllRoom(req.body.idHouse);
+        res.status(200).json({error: false, message: 'La pièce a bien été supprimé !', roomList: roomList});
+    }else{
+        res.status(204).json({error: true, message: 'Une erreur est survenue !'});
     }
 }

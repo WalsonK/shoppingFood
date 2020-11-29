@@ -44,6 +44,7 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { DialogAddItemComponent } from './pages/dialog-add-item/dialog-add-item.component';
 import { DialogSettingsComponent } from './pages/dialog-settings/dialog-settings.component';
 import { LoadingcardComponent } from './pages/loadingcard/loadingcard.component';
+import { DialogAddRoomComponent } from './pages/dialog-add-room/dialog-add-room.component';
 
 
 
@@ -62,7 +63,8 @@ import { LoadingcardComponent } from './pages/loadingcard/loadingcard.component'
     HomeComponent,
     ShopListComponent,
     DialogSettingsComponent,
-    LoadingcardComponent
+    LoadingcardComponent,
+    DialogAddRoomComponent
   ],
   imports: [
     BrowserModule,

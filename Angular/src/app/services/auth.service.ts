@@ -50,6 +50,18 @@ export class AuthService {
     localStorage.removeItem('userId');
   }
 
+  getRooms(id: number){
+    return this.http.post('http://localhost:8001/getRooms', {id}, {headers: this.headers})
+  }
+
+  createRoom(id: number, roomName: string, lastModif: string){
+    return this.http.post('http://localhost:8001/createRoom', {id, roomName, lastModif}, {headers: this.headers})
+  }
+  deleteRoom(id:number, idHouse: number, idRoom: number){
+    return this.http.post('http://localhost:8001/deleteRoom', {id, idHouse, idRoom}, {headers: this.headers})
+  }
+
+
   intercept(req: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
     const token = localStorage.token; // you probably want to store it in localStorage or something
 

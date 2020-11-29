@@ -1,0 +1,19 @@
+<div class="modal-header">
+    <h2 class="modal-title" mat-dialog-title>Voulez ajouter une nouvelle pièce ?</h2>
+</div>
+
+<mat-dialog-content>
+  <div class="modal-body">
+    <form>
+      <div class="form-group">
+        <label for="rommName">Nom de la nouvelle pièce :</label>
+        <input type="text" class="form-control" id="rommName" placeholder="Salon" [(ngModel)]="roomName" name="roomName">
+      </div>
+    </form>
+  </div>
+</mat-dialog-content>
+
+<mat-dialog-actions class="modal-footer">
+    <button type="button" class="btn btn-outline-secondary" mat-dialog-close="undefined">Annuler</button>
+    <button type="button" class="btn btn-outline-primary" [mat-dialog-close]="roomName">Ajouter</button>
+</mat-dialog-actions>

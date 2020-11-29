@@ -75,6 +75,3 @@ exports.auth = (req, res, next) => {
         res.status(200).json({error: true, message: 'Veuillez vous authentifier'})
     }
 }
-exports.test = (req, res, next) =>{
-    console.log('ok !');
-}

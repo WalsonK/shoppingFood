@@ -3,11 +3,15 @@
     <h3 class="card-title">Pièces :</h3>
     <div class="card-text">
           <!-- Card for one Room -->
-          <app-rooms *ngFor="let room of rooms" [roomName]="room.name" [lastModif]="room.lastModif"></app-rooms>
+          <app-rooms *ngFor="let room of rooms" 
+          [roomName]="room.nameRoom" 
+          [lastModif]="room.lastModif"
+          [idHouse]="room.idHouse"
+          [idRoom] ="room.idRoom"
+          (roomList)="getRoomListEvent($event)"></app-rooms>
 
     </div><br>
-    <button type="button" class="btn btn-outline-danger card-link">Supprimer une pièces</button>
-    <button type="button" class="btn btn-outline-primary card-link">Ajouter une pièces</button>
+    <button type="button" class="btn btn-outline-primary card-link" (click)="openDialog()">Ajouter une pièces</button>
   </div>
 </div>
 

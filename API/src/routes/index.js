@@ -9,4 +9,9 @@ routes.post('/home', userMiddelware.auth, user.getUser);
 routes.post('/firstConnect', userMiddelware.auth, user.firstConnect);
 routes.post('/updateUser', userMiddelware.auth, user.modifyUser); // + 
 
+//Room
+routes.post('/getRooms', userMiddelware.auth, user.getAllRooms);
+routes.post('/createRoom', userMiddelware.auth, user.createRoom);
+routes.post('/deleteRoom', userMiddelware.auth, user.deleteRoom);
+
 module.exports = routes; // Export des routes

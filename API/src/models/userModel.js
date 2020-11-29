@@ -86,6 +86,13 @@ exports.getHouse = (id) =>{
         })
     })
 }
+exports.getHouseLowQuant = (id) =>{
+    return new Promise((resolve, reject) =>{
+        bdd.query('SELECT `lowQuant` FROM `house` WHERE `idHouse` = ?', [id], (error, results, fields) =>{
+            resolve(results[0].lowQuant)
+        })
+    })
+}
 
 exports.setHouseLowQuant = (id, lowQuant) =>{
     return new Promise((resolve, reject) =>{
@@ -108,6 +115,29 @@ exports.updateUser = (firstName, lastName, pseudo, alert, lowQuant, email) => {
         bdd.query('UPDATE `user` SET `firstName` = ?, `lastName`= ?, `pseudo` = ?, `isAlertActivate` = ?, `lowQuant` = ? WHERE `email` = ?', 
         [firstName, lastName, pseudo, alert, lowQuant, email], (error, results, fields) =>{
             resolve(results.changedRows)
+        })
+    })
+}
+exports.getAllRoom = (houseId) =>{
+    return new Promise((resolve, reject) =>{
+        bdd.query('SELECT * FROM `room` WHERE `idHouse` = ?', [houseId], (error, results, fields) =>{
+            resolve(results)
+        })
+    })
+}
+
+exports.createRoom = (roomName, lastModif, houseId) =>{
+    return new Promise((resolve, reject) =>{
+        bdd.query('INSERT INTO `room` SET ?', {nameRoom: roomName, lastModif: lastModif, idHouse: houseId}, (error, results, fields) =>{
+            resolve(results.insertId)
+        })
+    })
+}
+
+exports.deleteRoom = (houseId, roomId) =>{
+    return new Promise((resolve, reject) =>{
+        bdd.query('DELETE FROM `room` WHERE `idHouse` = ? AND `idRoom` = ?', [houseId, roomId], (error, results, fields) =>{
+            resolve(results.affectedRows)
         })
     })
 }

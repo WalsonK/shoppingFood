@@ -105,12 +105,11 @@ export class HomeComponent implements OnInit {
     );
 
   }
-
+//First Connection
   private _filter(value: string): string[] {
     const filterValue = value.toLowerCase();
     return this.options.filter(option => option.toLowerCase().includes(filterValue));
   }
-
   addOnTeams(){
     this.member = this.member.trim();
     if(this.member != ''){
@@ -132,8 +131,7 @@ export class HomeComponent implements OnInit {
       
   }
 
-
-
+  // Dashboard Home 
   startDashboard(){
    this.memberPseudo = this.myTeam[0].name;
    this.memberStatut = this.myTeam[0].isAdmin;
@@ -145,7 +143,7 @@ export class HomeComponent implements OnInit {
         document.location.reload(true);
       });
     }else{
-      
+
       const snackBarRef = this.snackBar.open(data.message,'',{ duration : 2000, panelClass: 'snackbar-success'});
       snackBarRef.afterDismissed().subscribe(() => {
         document.location.reload(true);
@@ -154,8 +152,6 @@ export class HomeComponent implements OnInit {
    });
     
   }
-
-
   openDialogSettings(){
     let dialogRef = this.dialog.open(DialogSettingsComponent,{
       height: '90%',
