@@ -6,7 +6,7 @@ routes.post('/register', userMiddelware.register, user.register);
 routes.post('/login', userMiddelware.login, user.login);
 
 routes.post('/home', userMiddelware.auth, user.getUser);
-routes.post('firstConnect', userMiddelware.auth, user.firstConnect);
+routes.post('/firstConnect', userMiddelware.auth, user.firstConnect);
 routes.post('/updateUser', userMiddelware.auth, user.modifyUser); // + 
 
 module.exports = routes; // Export des routes

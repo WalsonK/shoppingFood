@@ -109,14 +109,14 @@ exports.firstConnect = async(req, res) =>{
     const userId = req.body.id;
     const a = await Users.updateFirst(userId, req.body.pseudo, req.body.alert);
     const houseId = await Users.getHouse(userId);
-    const b = await Users.setHouseLowQuant(houseId, req.body.lowQuant);
+    const b = await Users.setHouseLowQuant(houseId, req.body.lowQuant); 
     const c = await Users.updateFamily(req.body.memberPseudo, req.body.memberStatut, houseId);
-    console.log('a ='+ a + ' b='+b+' c='+c);
-    if(a === 1 && b != 0 && c != 0){
-        res.status(304).json({ error: true, message: ' échouée' });
+    // (a != 0) = ok & (b != 0) = ok &
+    if(a != 0 && b !=0 && c != 0){
+        res.status(200).json({ error: false, message: ' réussie' });
     }
     else{
-        res.status(200).json({ error: false, message: ' réussie' });
+        res.status(304).json({ error: true, message: 'échouée ' });
     }
 }
 

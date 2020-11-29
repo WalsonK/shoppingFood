@@ -73,9 +73,8 @@ exports.getAllPseudo = () =>{
 
 exports.updateFirst = (id, pseudo, alert) =>{
     return new Promise((resolve, reject) =>{
-        bdd.query('INSERT INTO `user` SET (pseudo, isFirstConnection, isAlertActivate) VALUES (?,?,?) WHERE `id` = ?',
-        [pseudo, 0, alert, id], (error, results, fields) => {
-            resolve(results.insertId)
+        bdd.query('UPDATE `user` SET `pseudo`= ?, `isFirstConnection`= ?, `isAlertActivate`= ?, `isAdmin`= ? WHERE `id` = ?', [pseudo, false, alert, true, id], (error, results, fields) => {
+            resolve(results.changedRows)
         });
     })
 }
@@ -98,7 +97,7 @@ exports.setHouseLowQuant = (id, lowQuant) =>{
 
 exports.updateFamily = (pseudo, statut, houseId) =>{
     return new Promise((resolve, reject) =>{
-        bdd.query('UPDATE `user` SET `idHouse` = ? `isAdmin` = ? WHERE `email` = ?', [houseId, statut, pseudo], (error, results, fields) =>{
+        bdd.query('UPDATE `user` SET `idHouse` = ?, `isAdmin` = ? WHERE `email` = ?', [houseId, statut, pseudo], (error, results, fields) =>{
             resolve(results.changedRows)
         })
     })

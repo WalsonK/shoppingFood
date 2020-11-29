@@ -135,27 +135,21 @@ export class HomeComponent implements OnInit {
 
 
   startDashboard(){
-    /*this.isFirstConnection = false;
-    
-
-    setTimeout(() => {
-      this.globalLoading = false;
-    }, 3000);
-    */
-   this.globalLoading = true;
    this.memberPseudo = this.myTeam[0].name;
    this.memberStatut = this.myTeam[0].isAdmin;
    
    this.auth.firstConnection(this.userId, this.pseudo, this.isAlertActivate, this.lowQuant, this.memberPseudo, this.memberStatut).subscribe((data: any) =>{
     if(data.error) {
-      this.globalLoading = false;
-      console.log('first connexion échouée :' + data.message);
       const snackBarRef = this.snackBar.open(data.message,'',{ duration : 2000, panelClass: 'snackbar-danger'});
       snackBarRef.afterDismissed().subscribe(() => {
         document.location.reload(true);
       });
     }else{
-      this.globalLoading = false;
+      
+      const snackBarRef = this.snackBar.open(data.message,'',{ duration : 2000, panelClass: 'snackbar-success'});
+      snackBarRef.afterDismissed().subscribe(() => {
+        document.location.reload(true);
+      });
     }
    });
     
