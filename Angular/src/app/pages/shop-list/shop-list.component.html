@@ -1,11 +1,16 @@
 <div class="card mx-4 mb-4">
-    <div class="card-body">
-      <h3 class="card-title">Shopping List :</h3>
+  <div class="card-body">
+    <h3 class="card-title">Shopping List :</h3>
+    <div class="card-text" *ngIf="!globalLoading; else elseBlock">
+      <ul *ngFor="let item of items">
+        <li>{{item.nameItem}}</li>
+      </ul>
+    </div><br>
+    <ng-template #elseBlock>
       <div class="card-text">
-        <ul *ngFor="let item of items">
-            <li>{{item.nameItem}}</li>
-        </ul>
-      </div><br>
-      <button type="button" class="btn btn-outline-primary card-link" disabled>Acheter</button>
-    </div>
+        <mat-spinner class="mx-auto"></mat-spinner>
+      </div>
+    </ng-template>
+    <!--<button type="button" class="btn btn-outline-primary card-link" disabled>Acheter</button>-->
   </div>
+</div>

@@ -1,6 +1,8 @@
 import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { AuthService } from 'src/app/services/auth.service';
+import { SharedService } from 'src/app/services/shared.service';
+
 
 @Component({
   selector: 'app-items',
@@ -27,7 +29,7 @@ export class ItemsComponent implements OnInit {
   
 
 
-  constructor(private auth: AuthService, private snackBar: MatSnackBar) { 
+  constructor(private auth: AuthService, private snackBar: MatSnackBar, private sharedService: SharedService) { 
     //Get user ID
     this.userId = parseInt(localStorage.getItem('userId'), 10);
   }
@@ -71,6 +73,7 @@ export class ItemsComponent implements OnInit {
       }else{
         this.snackBar.open(data.message,'',{ duration : 2000, panelClass: 'snackbar-success'});
         //Trouver un moyen pour appeler le Oninit de shop-list component
+        this.sharedService.sendReloadEvent();
       }
     })
   }
