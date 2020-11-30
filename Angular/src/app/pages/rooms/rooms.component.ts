@@ -12,6 +12,7 @@ import { AuthService } from 'src/app/services/auth.service';
 export class RoomsComponent implements OnInit {
 
   userId: number;
+  localRoomName: string;
 
   @Input() idHouse: number;
   @Input() idRoom: number;
@@ -21,27 +22,8 @@ export class RoomsComponent implements OnInit {
 
   @Output() roomList = new EventEmitter<Array<any>>();
 
-  items = [
-    /*{
-      imgLink: '../../../assets/img/mouchoirs.png',
-      name: 'Mouchoirs',
-      quant: 5,
-      isEdit: false,
-      maxQuant: 10
-    },
-    {
-      imgLink: '../../../assets/img/papierToilet.png', 
-      name: 'Papier Toilette',
-      quant: 15,
-      isEdit: false,
-      maxQuant: 20
-    }
-    {
-      name: 'cuisine',
-      lastModif: '05/11/2020 à 9h00',
-      isModify: false       mettre a jour les datas envoyé @output event(emit)
-    }*/
-  ];
+
+  items = [];
 
   constructor(public dialog : MatDialog, private auth: AuthService, private snackBar: MatSnackBar) {
     //Get user ID
@@ -49,6 +31,13 @@ export class RoomsComponent implements OnInit {
   }
 
   ngOnInit(): void {
+    this.auth.getItems(this.userId, this.idRoom).subscribe((data: any) =>{
+      if(data.error) {
+        this.snackBar.open(data.message,'',{ duration : 2000, panelClass: 'snackbar-danger'});
+      }else{
+        this.items = data.itemsList;
+      }
+    })
     
   }
 
@@ -66,6 +55,7 @@ export class RoomsComponent implements OnInit {
 
   changeRoomName(){
     this.isModify = true;
+    this.localRoomName = this.roomName;
     
     //items modifing statut
     for(let i = 0;i < this.items.length;i++){
@@ -74,20 +64,23 @@ export class RoomsComponent implements OnInit {
   }
   validateChangeRoomName(){
     this.isModify = false;
+    if(this.roomName == ''){
+      this.roomName = this.localRoomName;
+      this.snackBar.open('Veuillez renseignez un nom valable !','',{ duration : 2000, panelClass: 'snackbar-danger'});
+    }else{
+      //Change last modif date format (JJ/MM/AAAA à HH/mm)
+      var d = new Date();
+      this.lastModif = d.getDate()+'/'+(d.getMonth()+1)+'/'+d.getFullYear()+' à '+d.getHours() + 'h' + d.getMinutes();
 
-    //Change last modif date format (JJ/MM/AAAA à HH/mm)
-    var d = new Date();
-    this.lastModif = d.getDate()+'/'+(d.getMonth()+1)+'/'+d.getFullYear()+' à '+d.getHours() + 'h' + d.getMinutes();
-
-    
-    //send change to bdd
-    this.auth.updateRoom(this.userId, this.roomName, this.lastModif, this.idHouse, this.idRoom).subscribe((data: any) =>{
-      if(data.error) {
-        this.snackBar.open(data.message,'',{ duration : 2000, panelClass: 'snackbar-danger'});
-      }else{
-        this.snackBar.open(data.message,'',{ duration : 2000, panelClass: 'snackbar-success'});
-      }
-    })
+      //send change to bdd
+      this.auth.updateRoom(this.userId, this.roomName, this.lastModif, this.idHouse, this.idRoom).subscribe((data: any) =>{
+        if(data.error) {
+          this.snackBar.open(data.message,'',{ duration : 2000, panelClass: 'snackbar-danger'});
+        }else{
+          this.snackBar.open(data.message,'',{ duration : 2000, panelClass: 'snackbar-success'});
+        }
+      })
+    }
 
     //items modifing statut
     for(let i = 0;i < this.items.length;i++){
@@ -99,7 +92,31 @@ export class RoomsComponent implements OnInit {
     let dialogRef = this.dialog.open(DialogAddItemComponent);
 
     dialogRef.afterClosed().subscribe(result => {
-      console.log('Dialog result: '+result)
+      if(result != 'false'|| result != undefined){
+        this.createItem(result.itemName, result.itemMaxQuant, result.itemImgSrc);
+      /* // Only after snackBar item create
+        this.items.push({
+          imgLink: result.itemImgSrc,
+          name: result.itemName,
+          quant: result.itemMaxQuant,
+          isEdit: false,
+          maxQuant: result.itemMaxQuant
+        })*/
+      }
+      
+      //console.log('Dialog result: '+result)
     })
   }
+
+  createItem(itemName, itemMaxQuant, imgSrc){
+    this.auth.createItem(this.userId, this.idRoom, itemName, itemMaxQuant, imgSrc).subscribe((data: any) =>{
+      if(data.error) {
+        this.snackBar.open(data.message,'',{ duration : 2000, panelClass: 'snackbar-danger'});
+      }else{
+        this.items = data.itemsList;
+        this.snackBar.open(data.message,'',{ duration : 2000, panelClass: 'snackbar-success'});
+      }
+    })
+  }
+
 }

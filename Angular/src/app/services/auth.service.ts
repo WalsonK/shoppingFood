@@ -45,15 +45,15 @@ export class AuthService {
   }
 
   logout() {
-    // remove user from local storage and set current user to null
+    // remove user from local storage
     localStorage.removeItem('token');
     localStorage.removeItem('userId');
   }
 
+//Rooms
   getRooms(id: number){
     return this.http.post('http://localhost:8001/getRooms', {id}, {headers: this.headers})
   }
-
   createRoom(id: number, roomName: string, lastModif: string){
     return this.http.post('http://localhost:8001/createRoom', {id, roomName, lastModif}, {headers: this.headers})
   }
@@ -62,6 +62,14 @@ export class AuthService {
   }
   updateRoom(id:number, roomName:string, lastModif: string, idHouse: number, idRoom: number){
     return this.http.post('http://localhost:8001/updateRoom', {id, roomName, lastModif, idHouse, idRoom}, {headers: this.headers})
+  }
+
+  //Items
+  getItems(id:number, roomId: number){
+    return this.http.post('http://localhost:8001/getItems', {id, roomId}, {headers: this.headers})
+  }
+  createItem(id: number, idRoom: number, itemName:string, itemMaxQuant: number, imgSrc:string){
+    return this.http.post('http://localhost:8001/createItem', {id, idRoom, itemName, itemMaxQuant, imgSrc}, {headers: this.headers})
   }
 
 

@@ -12,9 +12,9 @@
           <!-- card for one Items-->
           <div class="row mb-4">
             <app-items *ngFor="let item of items"
-              [imgLink]="item.imgLink" 
-              [name]="item.name" 
-              [quant]="item.quant" 
+              [imgLink]="item.imgSrc" 
+              [name]="item.nameItem" 
+              [quant]="item.nowQuant" 
               [maxQuant]="item.maxQuant"
               [isEdit]="item.isEdit"
               class="mx-2">

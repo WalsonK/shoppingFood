@@ -39,7 +39,7 @@ export class RoomListComponent implements OnInit {
     dialogRef.afterClosed().subscribe(result => {
       if(result == 'undefined')
       this.snackBar.open('Veuillez renseignez un nom de pièce','',{ duration : 2000, panelClass: 'snackbar-danger'});
-      else{
+      else if(result != undefined){
         this.roomName = result;
         this.lastModif = this.getStringDateAndHour();
     

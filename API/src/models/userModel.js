@@ -150,3 +150,21 @@ exports.updateRoom = (roomName, lastModif, roomId, houseId) =>{
         })
     })
 }
+
+exports.getAllItems = (roomId) =>{
+    return new Promise((resolve, reject) =>{
+        bdd.query('SELECT * FROM `item` WHERE `idRoom` = ?', [roomId], (error, results, fields) =>{
+            resolve(results)
+        })
+    })
+}
+
+exports.createItem = (itemName, itemMaxQuant, imgSrc, idRoom) =>{
+    return new Promise((resolve, reject) =>{
+        bdd.query('INSERT INTO `item` SET ?',
+        {nameItem: itemName, nowQuant: itemMaxQuant, maxQuant: itemMaxQuant, imgSrc: imgSrc, idRoom: idRoom}, 
+        (error, results, fields) =>{
+            resolve(results.insertId)
+        })
+    })
+}

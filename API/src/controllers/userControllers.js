@@ -174,3 +174,23 @@ exports.updateRoom = async(req, res) =>{
         res.status(304).json({error: true, message: 'Modification réussie'});
     }
 }
+
+exports.getAllItems = async(req, res) =>{
+    const itemsList = await Users.getAllItems(req.body.roomId);
+    if(itemsList == undefined){
+        res.json({error: true, message: 'La liste des items n\'as pas pu être récuperrer !'});
+    }else{
+        res.status(200).json({error: false, itemsList: itemsList});
+    }
+}
+
+exports.createItem = async(req, res) =>{
+    const roomId = req.body.idRoom;
+    const isCreated = await Users.createItem(req.body.itemName, req.body.itemMaxQuant, req.body.imgSrc, roomId);
+    if(isCreated !=0){
+        const itemsList = await Users.getAllItems(roomId);
+        res.status(200).json({error: false, message: 'Création de l\'item réussie', itemsList: itemsList});
+    }else{
+        res.status(304).json({ error: true, message: 'L\'item n\'as pas été crée !'});
+    }
+}

@@ -1,32 +1,40 @@
 <div class="modal-header">
     <h2 class="modal-title" mat-dialog-title>Voulez ajouter un Item à cette pièce ?</h2>
 </div>
+<mat-dialog-content *ngIf="validationStatut; else elseBlock">
+  <div class="modal-body">
+    <h3>Récapitulatif :</h3>
+    <p>
+      <b>Nom :</b><i> {{itemName}}</i><br>
+      <b>Type :</b><i> {{itemType}}</i><br>
+      <b>Quantité maximum :</b><i> {{itemMaxQuant}}</i>
+    </p>
+  </div>
+  <div class="modal-footer">
+    <button type="button" class="btn btn-outline-secondary" mat-dialog-close="false">Annuler</button>
+    <button type="button" class="btn btn-outline-primary" [mat-dialog-close]="item">Ajouter</button>
+  </div>
+</mat-dialog-content>
 
-<mat-dialog-content>
+<ng-template #elseBlock>
+  <mat-dialog-content>
     <div class="modal-body">
         <form>
             <div class="form-group">
               <label for="input1">Quel nom pour le nouveau produit</label>
-              <input type="email" class="form-control" id="input1" placeholder="example">
+              <input type="email" class="form-control" id="input1" placeholder="example" [(ngModel)]="itemName" name="itemName">
             </div>
             <div class="form-group">
               <label for="select1">Quelle type de produit</label>
-              <select class="form-control" id="select1">
-                <option>Mouchoirs</option>
-                <option>Papier toilette</option>
-                <option>Parfum</option>
-                <option>Déodorant</option>
+              <select class="form-control" id="select1" [(ngModel)]="itemType" name="itemType">
+                <option>Mouchoir</option>
+                <option>Papier toilet</option>
               </select>
             </div>
             <div class="form-group">
               <label for="select2">Quelle est la quantité maximum</label>
-              <select multiple class="form-control" id="select2">
-                <option>1</option>
-                <option>2</option>
-                <option>3</option>
-                <option>4</option>
-                <option>5</option>
-              </select>
+              <input type="number" min="5" max="30" class="form-control" id="select2" [(ngModel)]="itemMaxQuant" name="itemMaxQuant">
+                
             </div>
           </form>
     </div>
@@ -34,5 +42,7 @@
 
 <mat-dialog-actions class="modal-footer">
     <button type="button" class="btn btn-outline-secondary" mat-dialog-close="false">Annuler</button>
-    <button type="button" class="btn btn-outline-primary" mat-dialog-close="true">Ajouter</button>
+    <button type="button" class="btn btn-outline-primary" (click)="validateItem()">Ajouter</button>
 </mat-dialog-actions>
+
+</ng-template>
