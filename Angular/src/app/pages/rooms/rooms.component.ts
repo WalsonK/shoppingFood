@@ -58,11 +58,7 @@ export class RoomsComponent implements OnInit {
         this.snackBar.open(data.message,'',{ duration : 2000, panelClass: 'snackbar-danger'});
       }else{
         const snackBarRef = this.snackBar.open(data.message,'',{ duration : 2000, panelClass: 'snackbar-success'});
-        /*snackBarRef.afterDismissed().subscribe(() => {
           // room list to parent -> room-list component
-          document.location.reload(true);
-        });*/
-        //console.log(data.roomList);
         this.roomList.emit(data.roomList);
       }
     })
@@ -82,6 +78,16 @@ export class RoomsComponent implements OnInit {
     //Change last modif date format (JJ/MM/AAAA à HH/mm)
     var d = new Date();
     this.lastModif = d.getDate()+'/'+(d.getMonth()+1)+'/'+d.getFullYear()+' à '+d.getHours() + 'h' + d.getMinutes();
+
+    
+    //send change to bdd
+    this.auth.updateRoom(this.userId, this.roomName, this.lastModif, this.idHouse, this.idRoom).subscribe((data: any) =>{
+      if(data.error) {
+        this.snackBar.open(data.message,'',{ duration : 2000, panelClass: 'snackbar-danger'});
+      }else{
+        this.snackBar.open(data.message,'',{ duration : 2000, panelClass: 'snackbar-success'});
+      }
+    })
 
     //items modifing statut
     for(let i = 0;i < this.items.length;i++){

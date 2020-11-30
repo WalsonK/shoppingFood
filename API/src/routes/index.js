@@ -13,5 +13,6 @@ routes.post('/updateUser', userMiddelware.auth, user.modifyUser); // +
 routes.post('/getRooms', userMiddelware.auth, user.getAllRooms);
 routes.post('/createRoom', userMiddelware.auth, user.createRoom);
 routes.post('/deleteRoom', userMiddelware.auth, user.deleteRoom);
+routes.post('/updateRoom', userMiddelware.auth, user.updateRoom);
 
 module.exports = routes; // Export des routes

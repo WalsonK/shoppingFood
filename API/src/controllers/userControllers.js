@@ -165,3 +165,12 @@ exports.deleteRoom = async(req, res) =>{
         res.status(204).json({error: true, message: 'Une erreur est survenue !'});
     }
 }
+
+exports.updateRoom = async(req, res) =>{
+    const isModified = await Users.updateRoom(req.body.roomName, req.body.lastModif, req.body.idRoom, req.body.idHouse);
+    if(isModified != 0){
+        res.status(200).json({error: false, message: 'Modification réussie'});
+    }else{
+        res.status(304).json({error: true, message: 'Modification réussie'});
+    }
+}

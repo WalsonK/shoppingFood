@@ -37,7 +37,6 @@ export class RoomListComponent implements OnInit {
     let dialogRef = this.dialog.open(DialogAddRoomComponent);
 
     dialogRef.afterClosed().subscribe(result => {
-      console.log('Dialog result: '+result)
       if(result == 'undefined')
       this.snackBar.open('Veuillez renseignez un nom de pièce','',{ duration : 2000, panelClass: 'snackbar-danger'});
       else{
@@ -57,7 +56,7 @@ export class RoomListComponent implements OnInit {
     const hour = d.getHours();
     const min = d.getMinutes();
 
-    const date = String(day)+'/'+String(month)+'/'+String(year)+' '+hour+'h'+min;
+    const date = String(day)+'/'+String(month)+'/'+String(year)+' à '+hour+'h'+min;
     return date;
   }
 

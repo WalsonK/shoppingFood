@@ -60,6 +60,9 @@ export class AuthService {
   deleteRoom(id:number, idHouse: number, idRoom: number){
     return this.http.post('http://localhost:8001/deleteRoom', {id, idHouse, idRoom}, {headers: this.headers})
   }
+  updateRoom(id:number, roomName:string, lastModif: string, idHouse: number, idRoom: number){
+    return this.http.post('http://localhost:8001/updateRoom', {id, roomName, lastModif, idHouse, idRoom}, {headers: this.headers})
+  }
 
 
   intercept(req: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
