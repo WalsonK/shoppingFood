@@ -94,17 +94,7 @@ export class RoomsComponent implements OnInit {
     dialogRef.afterClosed().subscribe(result => {
       if(result != 'false'|| result != undefined){
         this.createItem(result.itemName, result.itemMaxQuant, result.itemImgSrc);
-      /* // Only after snackBar item create
-        this.items.push({
-          imgLink: result.itemImgSrc,
-          name: result.itemName,
-          quant: result.itemMaxQuant,
-          isEdit: false,
-          maxQuant: result.itemMaxQuant
-        })*/
       }
-      
-      //console.log('Dialog result: '+result)
     })
   }
 

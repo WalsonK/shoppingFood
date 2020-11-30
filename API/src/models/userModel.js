@@ -144,7 +144,7 @@ exports.deleteRoom = (houseId, roomId) =>{
 
 exports.updateRoom = (roomName, lastModif, roomId, houseId) =>{
     return new Promise((resolve, reject) =>{
-        bdd.query('UPDATE `room` SET `nameRoom` = ?, `lastModif` = ? WHERE `idHouse` = ? AND `idRoom` = ?',
+        bdd.query('UPDATE `room` SET `nameRoom` = ?, `lastModif` = ? WHERE `idRoom` = ? AND `idHouse` = ?',
         [roomName, lastModif, roomId, houseId], (error, results, fields) =>{
             resolve(results.changedRows)
         })
