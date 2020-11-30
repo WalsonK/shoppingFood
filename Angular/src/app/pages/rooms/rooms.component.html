@@ -12,11 +12,14 @@
           <!-- card for one Items-->
           <div class="row mb-4">
             <app-items *ngFor="let item of items"
+              [roomId]="idRoom"
+              [itemId]="item.idItem"
               [imgLink]="item.imgSrc" 
               [name]="item.nameItem" 
               [quant]="item.nowQuant" 
               [maxQuant]="item.maxQuant"
               [isEdit]="item.isEdit"
+              (itemsList)="getItemsListEvent($event)"
               class="mx-2">
             </app-items>
           </div>

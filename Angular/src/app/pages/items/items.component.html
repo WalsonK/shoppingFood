@@ -7,7 +7,7 @@
       </button>
       <!-- Button to Validate -->
       <ng-template #validateEditBlock >
-        <button class="btn float-left">
+        <button class="btn float-left" (click)="deleteItem()">
           <fa-icon icon="trash-alt"></fa-icon>
         </button>
         <button class="btn float-right" (click)="onValidEdit()">

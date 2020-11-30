@@ -194,3 +194,13 @@ exports.createItem = async(req, res) =>{
         res.status(304).json({ error: true, message: 'L\'item n\'as pas été crée !'});
     }
 }
+
+exports.deleteItem = async(req, res) =>{
+    const isDeleted = await Users.deleteItem(req.body.roomId, req.body.itemId);
+    if(isDeleted != 0){
+        const itemsList = await Users.getAllItems(req.body.roomId);
+        res.status(200).json({error: false, message: 'L\'objet a bien été supprimé !', itemsList: itemsList});
+    }else{
+        res.status(204).json({error: true, message: 'Une erreur est survenue !'});   
+    }
+}

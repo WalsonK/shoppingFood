@@ -168,3 +168,11 @@ exports.createItem = (itemName, itemMaxQuant, imgSrc, idRoom) =>{
         })
     })
 }
+
+exports.deleteItem =(roomId, itemId) =>{
+    return new Promise((resolve, reject) =>{
+        bdd.query('DELETE FROM `item` WHERE `idRoom` = ? AND `idItem` = ?', [roomId, itemId], (error, results, fields) =>{
+            resolve(results.affectedRows)
+        })
+    })
+}

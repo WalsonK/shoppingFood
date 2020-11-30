@@ -71,6 +71,9 @@ export class AuthService {
   createItem(id: number, idRoom: number, itemName:string, itemMaxQuant: number, imgSrc:string){
     return this.http.post('http://localhost:8001/createItem', {id, idRoom, itemName, itemMaxQuant, imgSrc}, {headers: this.headers})
   }
+  deleteItem(id: number, itemId: number, roomId: number){
+    return this.http.post('http://localhost:8001/deleteItem', {id, itemId, roomId}, {headers: this.headers})
+  }
 
 
   intercept(req: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {

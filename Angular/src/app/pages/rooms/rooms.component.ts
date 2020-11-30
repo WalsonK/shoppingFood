@@ -109,4 +109,8 @@ export class RoomsComponent implements OnInit {
     })
   }
 
+  getItemsListEvent(itemsList: Array<any>){
+    this.items = itemsList;
+  }
+
 }
