@@ -171,7 +171,7 @@ exports.updateRoom = async(req, res) =>{
     if(isModified != 0){
         res.status(200).json({error: false, message: 'Modification réussie'});
     }else{
-        res.status(304).json({error: true, message: 'Modification réussie'});
+        res.status(304).json({error: true, message: 'Modification échouée'});
     }
 }
 
@@ -202,5 +202,30 @@ exports.deleteItem = async(req, res) =>{
         res.status(200).json({error: false, message: 'L\'objet a bien été supprimé !', itemsList: itemsList});
     }else{
         res.status(204).json({error: true, message: 'Une erreur est survenue !'});   
+    }
+}
+
+exports.updateItem = async(req, res)=>{
+    const userId = req.body.id;
+    //Update
+    const isModified = await Users.updateItem(req.body.itemName, req.body.quant, req.body.roomId, req.body.itemId);
+    if(isModified == 0){
+        res.status(304).json({error: true, message: 'Modification échouée'});
+    }else{
+        const houseId = await Users.getHouse(userId);
+        const lowQuant = await Users.getHouseLowQuant(houseId);
+        res.status(200).json({error: false, message: 'Modification réussie'});
+    }
+}
+
+exports.getShopList = async(req, res) =>{
+    const userId = req.body.id;
+    const houseId = await Users.getHouse(userId);
+
+    const shopListName = await Users.getAllShopItem(houseId);
+    if(shopListName != null){
+        res.status(200).json({error: false, shopList: shopListName});
+    }else{
+        res.json({error: true, message: 'La liste des items n\'as pas pu être récuperrer !'});
     }
 }

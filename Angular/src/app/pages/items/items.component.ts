@@ -52,9 +52,6 @@ export class ItemsComponent implements OnInit {
       }
     });
   }
-  onValidEdit(){
-    this.isEdit = false;
-  }
 
   lowQuant(){
     if(this.quant > 0)
@@ -64,6 +61,18 @@ export class ItemsComponent implements OnInit {
   upQuant(){
     if(this.quant < this.maxQuant)
       this.quant += 1;
+  }
+
+  onValidEdit(){
+    this.isEdit = false;
+    this.auth.updateItem(this.userId, this.name, this.quant, this.itemId, this.roomId).subscribe((data:any) =>{
+      if(data.error) {
+        this.snackBar.open(data.message,'',{ duration : 2000, panelClass: 'snackbar-danger'});
+      }else{
+        this.snackBar.open(data.message,'',{ duration : 2000, panelClass: 'snackbar-success'});
+        //Trouver un moyen pour appeler le Oninit de shop-list component
+      }
+    })
   }
 
 }

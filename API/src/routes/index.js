@@ -19,5 +19,9 @@ routes.post('/updateRoom', userMiddelware.auth, user.updateRoom);
 routes.post('/getItems', userMiddelware.auth, user.getAllItems);
 routes.post('/createItem', userMiddelware.auth, user.createItem);
 routes.post('/deleteItem', userMiddelware.auth, user.deleteItem);
+routes.post('/updateItem', userMiddelware.auth, user.updateItem);
+
+//Shop List
+routes.post('/getShopList', userMiddelware.auth, user.getShopList);
 
 module.exports = routes; // Export des routes

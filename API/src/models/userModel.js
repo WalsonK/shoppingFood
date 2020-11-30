@@ -125,6 +125,13 @@ exports.getAllRoom = (houseId) =>{
         })
     })
 }
+exports.getAllRoomId = (houseId) =>{
+    return new Promise((resolve, reject) =>{
+        bdd.query('SELECT `idRoom` FROM `room` WHERE `idHouse` = ?', [houseId], (error, results, fields) =>{
+            resolve(results)
+        })
+    })
+}
 
 exports.createRoom = (roomName, lastModif, houseId) =>{
     return new Promise((resolve, reject) =>{
@@ -173,6 +180,23 @@ exports.deleteItem =(roomId, itemId) =>{
     return new Promise((resolve, reject) =>{
         bdd.query('DELETE FROM `item` WHERE `idRoom` = ? AND `idItem` = ?', [roomId, itemId], (error, results, fields) =>{
             resolve(results.affectedRows)
+        })
+    })
+}
+exports.updateItem = (nameItem, nowQuant, idRoom, idItem) =>{
+    return new Promise((resolve, reject) =>{
+        bdd.query('UPDATE `item` SET `nameItem`= ?, `nowQuant`= ? WHERE `idRoom`= ? AND `idItem`= ?',
+        [nameItem, nowQuant, idRoom, idItem], (error, results, fields) =>{
+            resolve(results.changedRows)
+        })
+    })
+}
+
+exports.getAllShopItem = (idHouse) =>{
+    return new Promise((resolve, reject) =>{
+        bdd.query('SELECT `nameItem` FROM `item` INNER JOIN `room` ON item.idRoom = room.idRoom INNER JOIN `house` ON room.idHouse = ? WHERE item.nowQuant <= house.lowQuant',
+        [idHouse], (error, results, fields) =>{
+            resolve(results)
         })
     })
 }
