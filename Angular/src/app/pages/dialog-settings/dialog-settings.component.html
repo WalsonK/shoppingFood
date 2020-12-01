@@ -275,7 +275,7 @@
                       <mat-slider
                         style="min-width: 90%;"
                         color="primary"
-                        [(ngModel)]="userData.lowQuant"
+                        [(ngModel)]="lowQuant"
                         thumbLabel
                         tickInterval="1"
                         min="0"
@@ -286,14 +286,14 @@
                     <div class="col-3">
                       <mat-form-field appearance="outline" class="col">
                         <mat-label>Quantité</mat-label>
-                        <input matInput type="number" placeholder="Quantité" [(ngModel)]="userData.lowQuant" name="lowQuant" max="10" min="0">
+                        <input matInput type="number" placeholder="Quantité" [(ngModel)]="lowQuant" name="lowQuant" max="10" min="0">
                       </mat-form-field>
                     </div>
                   </div>
                 </div>
 
                 <!--Save modification btn-->
-                <button type="submit" class="btn btn-outline-primary btn-block" [mat-dialog-close]="userData">Sauvegarder</button>
+                <button type="submit" class="btn btn-outline-primary btn-block" [mat-dialog-close]="lowQuant">Sauvegarder</button>
               
               </div>
             </div>

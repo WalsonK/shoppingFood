@@ -123,19 +123,25 @@ exports.firstConnect = async(req, res) =>{
     }
 }
 
+exports.updateLowQuant = async(req, res) =>{
+    const houseId = await Users.getHouse(req.body.id);
+    const lowQuant = await Users.getHouseLowQuant(houseId);
+    if(req.body.lowQuant != lowQuant){
+        const isUpdated = await Users.setHouseLowQuant(req.body.lowQuant, houseId);
+        if(isUpdated != 0){
+            res.status(200).json({ error: false, message: 'Quantité minimal mis à jour !' });
+        }else{
+            res.status(304).json({ error: true, message: 'Une erreur est survenue !' });
+        }
+    }
+}
+
 exports.modifyUser = async(req, res) =>{
     if(req.body.hash == undefined){ // Update simple
         const isUserUpdate = await Users.updateUser(req.body.firstName, req.body.lastName, req.body.pseudo, req.body.alert, req.body.email, req.body.id)
         if(isUserUpdate == 0){
             res.status(304).json({error: true, message: 'Informations non modifiées !'})
         }else{
-            /*const houseId = await Users.getHouse(req.body.id);
-            const isLowQuantUpdated = await Users.setHouseLowQuant(req.body.lowQuant, houseId);
-            if(isLowQuantUpdated != 0){
-               
-            }else{
-                res.status(304).json({error: true, message: 'Quantité minimal non modifiées !'})
-            }*/
             res.status(200).json({error: false, message: 'Informations mis à jour sauf mot de passe !'})
         }
     }else{ // Update password
@@ -144,14 +150,7 @@ exports.modifyUser = async(req, res) =>{
         const isUserUpdate = await Users.updateUserNHash(req.body.firstName, req.body.lastName, req.body.pseudo, hash, req.body.alert, req.body.email, req.body.id);
         if(isUserUpdate == 0){
             res.status(304).json({error: true, message: 'Informations non modifiées !'})
-        }else{/*
-            const houseId = await Users.getHouse(req.body.id);
-            const isLowQuantUpdated = await Users.setHouseLowQuant(houseId, req.body.lowQuant);
-            if(isLowQuantUpdated != 0){
-                
-            }else{
-                res.status(304).json({error: true, message: 'Quantité minimal non modifiées !'})
-            }*/
+        }else{
             res.status(200).json({error: false, message: 'Informations mis à jour !'});
         }
     }

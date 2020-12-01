@@ -26,9 +26,10 @@ export class DialogSettingsComponent implements OnInit {
       pseudo: string,
       hash: string,
       alert: boolean,
-      lowQuant: number,
   };
-  
+
+  public lowQuant: number;
+
   public tabSelected:string;
 
   cards = [
@@ -81,8 +82,8 @@ export class DialogSettingsComponent implements OnInit {
       pseudo: this.data.pseudo,
       hash: this.data.hash,
       alert: this.data.isAlertActivate,
-      lowQuant: this.data.lowQuant
     };
+    this.lowQuant = this.data.lowQuant
 
   }
 

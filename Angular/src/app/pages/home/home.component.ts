@@ -169,33 +169,52 @@ export class HomeComponent implements OnInit {
     });
 
     dialogRef.afterClosed().subscribe(result => {
-      if(result != undefined){
-        //update data in Local !
-        this.email = result.email;
-        this.firstName = result.firstName;
-        this.lastName = result.lastName;
-        this.pseudo = result.pseudo;
-        this.isAlertActivate = result.alert;
-        this.lowQuant = result.lowQuant;
-        //Check password
-        if(result.hash != undefined){
-          result.hash.trim();
-          if(result.hash.length >4){
-            this.hash = result.hash;
-          }
-        }
+      var isNumb = typeof result;
+      // if response est low quant
+      if(isNumb == 'number'){
+        if(result != this.lowQuant){
+          //update lowQuant in local 
+          this.lowQuant = result;
 
-        //update data for bdd !
-        this.auth.updateUser(this.userId,this.email, this.firstName, this.lastName, this.pseudo, this.hash, this.isAlertActivate, this.lowQuant).subscribe((data: any) =>{
-          if(data.error) {
-            console.log('Modification échouée :' + data.message);
-            this.snackBar.open(data.message,'',{ duration : 2000, panelClass: 'snackbar-danger'});
-          }else{
-            this.snackBar.open(data.message,'',{ duration : 2000, panelClass: 'snackbar-success'});
+          // update in bdd
+          this.auth.updateLowQuant(this.userId, this.lowQuant).subscribe((data:any) =>{
+            if(data.error){
+              this.snackBar.open(data.message,'',{ duration : 2000, panelClass: 'snackbar-danger'});
+            }else{
+              this.snackBar.open(data.message,'',{ duration : 2000, panelClass: 'snackbar-success'});
+            }
+          });
+        }
+      }else{ // if response is user data
+        if(result != undefined){
+          //update data in Local !
+          this.email = result.email;
+          this.firstName = result.firstName;
+          this.lastName = result.lastName;
+          this.pseudo = result.pseudo;
+          this.isAlertActivate = result.alert;
+          
+          this.lowQuant = result.lowQuant;
+          //Check password
+          if(result.hash != undefined){
+            result.hash.trim();
+            if(result.hash.length >4){
+              this.hash = result.hash;
+            }
           }
-        })
-      }else{
-        console.log('Pas de modif ! ')
+  
+          //update data for bdd !
+          this.auth.updateUser(this.userId,this.email, this.firstName, this.lastName, this.pseudo, this.hash, this.isAlertActivate, this.lowQuant).subscribe((data: any) =>{
+            if(data.error) {
+              console.log('Modification échouée :' + data.message);
+              this.snackBar.open(data.message,'',{ duration : 2000, panelClass: 'snackbar-danger'});
+            }else{
+              this.snackBar.open(data.message,'',{ duration : 2000, panelClass: 'snackbar-success'});
+            }
+          })
+        }else{
+          console.log('Pas de modif ! ')
+        }
       }
     })
   }
