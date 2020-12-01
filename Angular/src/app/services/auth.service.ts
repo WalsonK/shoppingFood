@@ -39,9 +39,9 @@ export class AuthService {
     return this.http.post('http://localhost:8001/firstConnect', {id, pseudo, alert, lowQuant, memberPseudo, memberStatut}, {headers: this.headers})
   }
 
-  updateUser(id: number, email: string, firstName: string, lastName: string, pseudo: string, alert: boolean, lowQuant:number){
+  updateUser(id: number, email: string, firstName: string, lastName: string, pseudo: string, hash: string, alert: boolean, lowQuant:number){
     //console.log('ok');
-    return this.http.post('http://localhost:8001/updateUser', {id, email, firstName, lastName, pseudo, alert, lowQuant}, {headers: this.headers})
+    return this.http.post('http://localhost:8001/updateUser', {id, email, firstName, lastName, pseudo, hash, alert, lowQuant}, {headers: this.headers})
   }
 
   logout() {

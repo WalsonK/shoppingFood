@@ -27,6 +27,7 @@ export class HomeComponent implements OnInit {
   firstName: string;
   lastName: string;
   pseudo: string;
+  hash: string;
   isAlertActivate: boolean;
   isDarkMode: boolean = false;
   isAutomaticPaiement: boolean = false;
@@ -161,6 +162,7 @@ export class HomeComponent implements OnInit {
         firstName: this.firstName,
         lastName: this.lastName,
         pseudo: this.pseudo,
+        hash: this.hash,
         isAlertActivate: this.isAlertActivate,
         lowQuant: this.lowQuant,
        },
@@ -175,9 +177,16 @@ export class HomeComponent implements OnInit {
         this.pseudo = result.pseudo;
         this.isAlertActivate = result.alert;
         this.lowQuant = result.lowQuant;
+        //Check password
+        if(result.hash != undefined){
+          result.hash.trim();
+          if(result.hash.length >4){
+            this.hash = result.hash;
+          }
+        }
 
         //update data for bdd !
-        this.auth.updateUser(this.userId,this.email, this.firstName, this.lastName, this.pseudo, this.isAlertActivate, this.lowQuant).subscribe((data: any) =>{
+        this.auth.updateUser(this.userId,this.email, this.firstName, this.lastName, this.pseudo, this.hash, this.isAlertActivate, this.lowQuant).subscribe((data: any) =>{
           if(data.error) {
             console.log('Modification échouée :' + data.message);
             this.snackBar.open(data.message,'',{ duration : 2000, panelClass: 'snackbar-danger'});

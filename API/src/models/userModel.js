@@ -94,7 +94,7 @@ exports.getHouseLowQuant = (id) =>{
     })
 }
 
-exports.setHouseLowQuant = (id, lowQuant) =>{
+exports.setHouseLowQuant = (lowQuant, id) =>{
     return new Promise((resolve, reject) =>{
         bdd.query('UPDATE `house` SET `lowQuant` = ? WHERE `idHouse` = ?', [lowQuant, id], (error, results, fields) =>{
             resolve(results.changedRows)
@@ -110,14 +110,23 @@ exports.updateFamily = (pseudo, statut, houseId) =>{
     })
 }
 
-exports.updateUser = (firstName, lastName, pseudo, alert, lowQuant, email) => {
+exports.updateUser = (firstName, lastName, pseudo, alert, email, id) => {
     return new Promise((resolve, reject) =>{
-        bdd.query('UPDATE `user` SET `firstName` = ?, `lastName`= ?, `pseudo` = ?, `isAlertActivate` = ?, `lowQuant` = ? WHERE `email` = ?', 
-        [firstName, lastName, pseudo, alert, lowQuant, email], (error, results, fields) =>{
+        bdd.query('UPDATE `user` SET `firstName` = ?, `lastName`= ?, `pseudo` = ?, `isAlertActivate` = ? WHERE `email` = ? AND `id` = ?', 
+        [firstName, lastName, pseudo, alert, email, id], (error, results, fields) =>{
             resolve(results.changedRows)
         })
     })
 }
+exports.updateUserNHash = (firstName, lastName, pseudo, hash, alert, email, id) => {
+    return new Promise((resolve, reject) =>{
+        bdd.query('UPDATE `user` SET `firstName` = ?, `lastName`= ?, `pseudo` = ?, `hash`= ?, `isAlertActivate` = ? WHERE `email` = ? AND `id` = ?', 
+        [firstName, lastName, pseudo, hash, alert, email, id], (error, results, fields) =>{
+            resolve(results.changedRows)
+        })
+    })
+}
+
 exports.getAllRoom = (houseId) =>{
     return new Promise((resolve, reject) =>{
         bdd.query('SELECT * FROM `room` WHERE `idHouse` = ?', [houseId], (error, results, fields) =>{
