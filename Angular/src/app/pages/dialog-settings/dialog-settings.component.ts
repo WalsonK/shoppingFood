@@ -98,8 +98,6 @@ public cardEdit : boolean = false;
     this.monthCard = this.data.monthCard;
     this.yearCard = this.data.yearCard;
     this.cvv = this.data.cvv;
-
-    console.log(this.numeroCard);
   }
 
   ngOnInit(): void {

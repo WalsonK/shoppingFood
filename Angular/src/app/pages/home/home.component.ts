@@ -73,11 +73,11 @@ export class HomeComponent implements OnInit {
         this.options = data.usersPseudo;
         const houseOwner = data.houseOwner;
         
+        //Credit card from db
         this.numeroCard = '***'+ data.houseData[0].numeroCard.substring(12);
         this.monthCard = data.houseData[0].monthCard;
         this.yearCard = data.houseData[0].yearCard;
         this.cvv = data.houseData[0].cvv;
-        console.log(this.numeroCard,this.monthCard, this.yearCard, this.cvv);
 
         //L'utilsateur possède une maison ?
         if(houseOwner != null){
