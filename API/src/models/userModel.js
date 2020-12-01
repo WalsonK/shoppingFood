@@ -183,6 +183,13 @@ exports.deleteItem =(roomId, itemId) =>{
         })
     })
 }
+exports.deleteItemFromRoom = (idRoom) =>{
+    return new Promise((resolve, reject) =>{
+        bdd.query('DELETE FROM `item` WHERE `idRoom`= ?', [idRoom], (error, results, fields) =>{
+            resolve(results.affectedRows)
+        })
+    })
+}
 exports.updateItem = (nameItem, nowQuant, idRoom, idItem) =>{
     return new Promise((resolve, reject) =>{
         bdd.query('UPDATE `item` SET `nameItem`= ?, `nowQuant`= ? WHERE `idRoom`= ? AND `idItem`= ?',

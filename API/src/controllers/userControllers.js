@@ -157,13 +157,19 @@ exports.createRoom = async(req, res) =>{
 }
 
 exports.deleteRoom = async(req, res) =>{
-    const isDeleted = await Users.deleteRoom(req.body.idHouse, req.body.idRoom);
-    if(isDeleted != 0){
-        const roomList = await Users.getAllRoom(req.body.idHouse);
-        res.status(200).json({error: false, message: 'La pièce a bien été supprimé !', roomList: roomList});
+    const isItemDeleted = await Users.deleteItemFromRoom(req.body.idRoom);
+    if(isItemDeleted != 0){
+        const isDeleted = await Users.deleteRoom(req.body.idHouse, req.body.idRoom);
+        if(isDeleted != 0){
+            const roomList = await Users.getAllRoom(req.body.idHouse);
+            res.status(200).json({error: false, message: 'La pièce a bien été supprimé !', roomList: roomList});
+        }else{
+            res.status(204).json({error: true, message: 'Une erreur est survenue !'});
+        }
     }else{
         res.status(204).json({error: true, message: 'Une erreur est survenue !'});
     }
+    
 }
 
 exports.updateRoom = async(req, res) =>{

@@ -3,6 +3,7 @@ import { MatDialog } from '@angular/material/dialog';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { DialogAddItemComponent } from 'src/app/pages/dialog-add-item/dialog-add-item.component';
 import { AuthService } from 'src/app/services/auth.service';
+import { SharedService } from 'src/app/services/shared.service';
 
 @Component({
   selector: 'app-rooms',
@@ -25,7 +26,7 @@ export class RoomsComponent implements OnInit {
 
   items = [];
 
-  constructor(public dialog : MatDialog, private auth: AuthService, private snackBar: MatSnackBar) {
+  constructor(public dialog : MatDialog, private auth: AuthService, private snackBar: MatSnackBar, private sharedService: SharedService) {
     //Get user ID
     this.userId = parseInt(localStorage.getItem('userId'), 10);
   }
@@ -49,6 +50,7 @@ export class RoomsComponent implements OnInit {
         const snackBarRef = this.snackBar.open(data.message,'',{ duration : 2000, panelClass: 'snackbar-success'});
           // room list to parent -> room-list component
         this.roomList.emit(data.roomList);
+        this.sharedService.sendReloadEvent();
       }
     })
   }

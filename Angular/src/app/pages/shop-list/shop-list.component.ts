@@ -35,13 +35,13 @@ export class ShopListComponent implements OnInit {
         //Temps de chargement 
         setTimeout(() => {
           this.globalLoading = false;
-        }, 1000);
+        }, 1500);
       }else{
         this.items = data.shopList;
         //Temps de chargement 
         setTimeout(() => {
           this.globalLoading = false;
-        }, 1000);
+        }, 1500);
       }
     })
   }

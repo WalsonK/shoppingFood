@@ -51,6 +51,8 @@ export class ItemsComponent implements OnInit {
         this.snackBar.open(data.message,'',{ duration : 2000, panelClass: 'snackbar-success'});
           // room list to parent -> room-list component
         this.itemsList.emit(data.itemsList);
+        //Refresh shop list
+        this.sharedService.sendReloadEvent();
       }
     });
   }
