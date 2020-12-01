@@ -42,6 +42,9 @@ export class AuthService {
   updateLowQuant(id: number, lowQuant: number){
     return this.http.post('http://localhost:8001/updateLowQuant', {id, lowQuant}, {headers: this.headers})
   }
+  updateCard(id: number, m: number, y:number, cvv: number){
+    return this.http.post('http://localhost:8001/updateCard', {id, m, y, cvv}, {headers: this.headers})
+  }
 
   updateUser(id: number, email: string, firstName: string, lastName: string, pseudo: string, hash: string, alert: boolean, lowQuant:number){
     return this.http.post('http://localhost:8001/updateUser', {id, email, firstName, lastName, pseudo, hash, alert, lowQuant}, {headers: this.headers})

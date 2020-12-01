@@ -36,20 +36,13 @@ public yearCard: number;
 public cvv: number;
 public cardEdit : boolean = false;
 
+public creditCard= {};
+
   public lowQuant: number;
 
 
   public tabSelected:string;
 
-  cards = [
-    {
-      id: 0,
-      numero: '***2435',
-      expirationDate: Date.now() ,
-      cvv: 523,
-      isEdit: false
-    }
-  ];
   historicToasts =[
     {
       modifName: 'Maman',
@@ -165,6 +158,14 @@ public cardEdit : boolean = false;
     //this.cards[id].isEdit = false;
     //console.log(this.cards[id].cvv);
     this.cardEdit = false;
+
+    this.creditCard = {
+      num: this.numeroCard,
+      m: this.monthCard,
+      y: this.yearCard,
+      cvv: this.cvv
+    };
+    console.log(this.creditCard);
   }
   userLogout(){
     this.auth.logout();

@@ -102,6 +102,14 @@ exports.getHouseLowQuant = (id) =>{
     })
 }
 
+exports.updateCreditCard = (m, y, cvv, id) =>{
+    return new Promise((resolve, reject) =>{
+        bdd.query('UPDATE `house` SET `monthCard`= ?, `yearCard`= ?, `cvv`= ? WHERE `idHouse`= ?', [m,y,cvv,id], (error, results, fields) =>{
+            resolve(results.affectedRows)
+        })
+    })
+}
+
 exports.setHouseLowQuant = (lowQuant, id) =>{
     return new Promise((resolve, reject) =>{
         bdd.query('UPDATE `house` SET `lowQuant` = ? WHERE `idHouse` = ?', [lowQuant, id], (error, results, fields) =>{

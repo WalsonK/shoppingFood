@@ -137,6 +137,15 @@ exports.updateLowQuant = async(req, res) =>{
         }
     }
 }
+exports.updateCard = async(req, res) =>{
+    const houseId = await Users.getHouse(req.body.id);
+    const isUpdated = await Users.updateCreditCard(req.body.m, req.body.y, req.body.cvv, houseId);
+    if(isUpdated != 0){
+        res.status(200).json({ error: false, message: 'La carte de crédit a été mis à jour !' });
+    }else{
+        res.status(304).json({ error: true, message: 'Une erreur est survenue !' });
+    }
+}
 
 exports.modifyUser = async(req, res) =>{
     if(req.body.hash == undefined){ // Update simple

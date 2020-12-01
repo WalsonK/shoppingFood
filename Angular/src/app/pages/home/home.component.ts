@@ -211,6 +211,24 @@ export class HomeComponent implements OnInit {
           this.isAlertActivate = result.alert;
           
           this.lowQuant = result.lowQuant;
+
+          /*if(result.m != null || result.y != null || result.cvv != null){
+            this.numeroCard = result.num;
+            this.monthCard = result.m;
+            this.yearCard = result.y;
+            this.cvv = result.cvv
+            this.auth.updateCard(this.userId, this.monthCard, this.yearCard, this.cvv).subscribe((data: any) =>{
+              if(data.error){
+                this.snackBar.open(data.message,'',{ duration : 2000, panelClass: 'snackbar-danger'});
+              }
+              else{
+                this.snackBar.open(data.message,'',{ duration : 2000, panelClass: 'snackbar-success'});
+              }
+            })
+          }*/
+
+          
+
           //Check password
           if(result.hash != undefined){
             result.hash.trim();

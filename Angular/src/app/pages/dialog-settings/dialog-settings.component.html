@@ -149,7 +149,7 @@
                   </mat-label>
                   <mat-slide-toggle color="primary" style="vertical-align: top;" [(ngModel)]="paiement" name="paiement"></mat-slide-toggle>
                 </div>
-                <button type="submit" class="btn btn-outline-primary btn-block" mat-dialog-close="true">Sauvegarder</button>
+                <button type="submit" class="btn btn-outline-primary btn-block" [mat-dialog-close]="creditCard">Sauvegarder</button>
               </div>
             </div>
           </div>
