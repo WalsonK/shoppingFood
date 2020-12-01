@@ -86,6 +86,14 @@ exports.getHouse = (id) =>{
         })
     })
 }
+exports.getHouseInfo = (id) =>{
+    return new Promise((resolve, reject) =>{
+        bdd.query('SELECT * FROM `house` WHERE `idHouse`= ?', [id], (error, results, fields) =>{
+            resolve(results)
+        })
+    })
+}
+
 exports.getHouseLowQuant = (id) =>{
     return new Promise((resolve, reject) =>{
         bdd.query('SELECT `lowQuant` FROM `house` WHERE `idHouse` = ?', [id], (error, results, fields) =>{

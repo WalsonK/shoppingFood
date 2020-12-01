@@ -34,6 +34,12 @@ export class HomeComponent implements OnInit {
   lowQuant: number;
   isHouseOwner: boolean;
 
+  //CREDIT CARD
+  numeroCard:string;
+  monthCard: number;
+  yearCard: number;
+  cvv: number;
+
   darkModeToggle = new FormControl({ value: '', disabled: true });
 
   myControl = new FormControl();
@@ -66,6 +72,12 @@ export class HomeComponent implements OnInit {
         this.lowQuant = data.userlowQuant;
         this.options = data.usersPseudo;
         const houseOwner = data.houseOwner;
+        
+        this.numeroCard = '***'+ data.houseData[0].numeroCard.substring(12);
+        this.monthCard = data.houseData[0].monthCard;
+        this.yearCard = data.houseData[0].yearCard;
+        this.cvv = data.houseData[0].cvv;
+        console.log(this.numeroCard,this.monthCard, this.yearCard, this.cvv);
 
         //L'utilsateur possède une maison ?
         if(houseOwner != null){
@@ -165,6 +177,10 @@ export class HomeComponent implements OnInit {
         hash: this.hash,
         isAlertActivate: this.isAlertActivate,
         lowQuant: this.lowQuant,
+        numeroCard: this.numeroCard,
+        monthCard: this.monthCard,
+        yearCard: this.yearCard,
+        cvv: this.cvv
        },
     });
 

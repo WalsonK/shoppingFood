@@ -82,6 +82,7 @@ exports.getUser = async(req, res) => {
         const user = await Users.getUserInfo(userId);
         const houseId = await Users.getHouse(userId);
         const lowQuant = await Users.getHouseLowQuant(houseId);
+        const houseData = await Users.getHouseInfo(houseId);
 
         const resultsArray = await Users.getAllPseudo();
         const pseudoArray = [];
@@ -100,7 +101,8 @@ exports.getUser = async(req, res) => {
             isAlertActivate: user.isAlertActivate,
             userlowQuant: lowQuant,
             houseOwner: user.idHouse,
-            usersPseudo: pseudoArray
+            usersPseudo: pseudoArray,
+            houseData: houseData
         })
     }
 

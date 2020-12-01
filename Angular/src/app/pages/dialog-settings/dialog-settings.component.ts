@@ -3,7 +3,7 @@ import { MAT_DIALOG_DATA, MatDialogRef, MatDialog} from '@angular/material/dialo
 import { dateInputsHaveChanged } from '@angular/material/datepicker/datepicker-input-base';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { Router } from '@angular/router';
-import { stringify } from 'querystring';
+import { FormControl } from '@angular/forms';
 import { AuthService } from 'src/app/services/auth.service';
 
 
@@ -16,6 +16,7 @@ export class DialogSettingsComponent implements OnInit {
 
 
   public darkMode:boolean = false;
+  darkModeToggle = new FormControl({ value: '', disabled: true });
   public paiement:boolean = true;
 
 
@@ -28,7 +29,15 @@ export class DialogSettingsComponent implements OnInit {
       alert: boolean,
   };
 
+    //CREDIT CARD
+public numeroCard:string;
+public monthCard: number;
+public yearCard: number;
+public cvv: number;
+public cardEdit : boolean = false;
+
   public lowQuant: number;
+
 
   public tabSelected:string;
 
@@ -70,7 +79,7 @@ export class DialogSettingsComponent implements OnInit {
 
   constructor(private snackBar: MatSnackBar,
     public dialogRef: MatDialogRef<DialogSettingsComponent>,
-    @Inject(MAT_DIALOG_DATA) public data: {email: string, firstName: string, lastName: string, pseudo: string, hash: string, isAlertActivate: boolean, lowQuant:number},
+    @Inject(MAT_DIALOG_DATA) public data: {email: string, firstName: string, lastName: string, pseudo: string, hash: string, isAlertActivate: boolean, lowQuant:number, numeroCard: string, monthCard: number, yearCard: number, cvv: number},
    private auth: AuthService,
    private router: Router) { 
 
@@ -83,8 +92,14 @@ export class DialogSettingsComponent implements OnInit {
       hash: this.data.hash,
       alert: this.data.isAlertActivate,
     };
-    this.lowQuant = this.data.lowQuant
+    this.lowQuant = this.data.lowQuant;
 
+    this.numeroCard = this.data.numeroCard;
+    this.monthCard = this.data.monthCard;
+    this.yearCard = this.data.yearCard;
+    this.cvv = this.data.cvv;
+
+    console.log(this.numeroCard);
   }
 
   ngOnInit(): void {
@@ -144,13 +159,14 @@ export class DialogSettingsComponent implements OnInit {
   }
 
   
-  editCard(id){
+  editCard(){
     //card modifing statut
-    this.cards[id].isEdit = true;
+    this.cardEdit = true;
   }
-  validateCard(id){
-    this.cards[id].isEdit = false;
-    console.log(this.cards[id].cvv);
+  validateCard(){
+    //this.cards[id].isEdit = false;
+    //console.log(this.cards[id].cvv);
+    this.cardEdit = false;
   }
   userLogout(){
     this.auth.logout();

@@ -84,22 +84,24 @@
               <div class="card-text">
                 <h4>Carte enregistrée :</h4>
                 <div class="form-group">
-                  <mat-expansion-panel *ngFor="let card of cards" (opened)="panelOpenState = true" (closed)="panelOpenState = false" class="mb-4">
+                  <mat-expansion-panel (opened)="panelOpenState = true" (closed)="panelOpenState = false" class="mb-4">
                     <mat-expansion-panel-header>
                       <mat-panel-title>
                         <mat-icon>payment</mat-icon>
-                        <span class="ml-2">{{ card.numero }}</span>
+                        <span class="ml-2">{{ numeroCard }}</span>
                       </mat-panel-title>
                       <mat-panel-description>
                         {{panelOpenState ? 'open' : 'closed'}}
                       </mat-panel-description>
                     </mat-expansion-panel-header>
 
-                    <div *ngIf="!card.isEdit; else elseBlock">
+                    <div *ngIf="!cardEdit; else elseBlock">
                       <p class="mb-0">Date d'éxpiration</p>
-                      <span>{{ card.expirationDate | date:'shortDate'}}</span><br>
+                      <span>{{ monthCard }}/{{ yearCard }}</span><br><br>
+                      
+                      <mat-divider></mat-divider>
 
-                      <button type="button" class="btn btn-outline-warning btn-block mt-4 mb-3" (click)="editCard(card.id)">
+                      <button type="button" class="btn btn-outline-warning btn-block mt-4 mb-3" (click)="editCard()">
                         <mat-icon style="vertical-align:middle;">edit</mat-icon>
                         <span class="ml-2">Modifier</span>
                       </button>
@@ -107,35 +109,37 @@
 
                     <ng-template #elseBlock >
                       <div class="form-row">
-                        <mat-form-field appearance="outline" class="col">
-                          <mat-label>Date d'éxpiration</mat-label>
-                          <input matInput [matDatepicker]="picker" [(ngModel)]="card.expirationDate" name="date">
-                          <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
-                          <mat-datepicker #picker></mat-datepicker>
-                        </mat-form-field>
+                        <div class="col-5">
+                          <mat-form-field appearance="outline" class="col">
+                            <mat-label>Mois :</mat-label>
+                            <input matInput type="number" placeholder="mois" [(ngModel)]="monthCard" name="monthCard" max="12" min="1">
+                          </mat-form-field>
+                        </div>
+                        <div class="col-5">
+                          <mat-form-field appearance="outline" class="col">
+                            <mat-label>Années :</mat-label>
+                            <input matInput type="number" placeholder="années" [(ngModel)]="yearCard" name="yearCard" max="30" min="20">
+                          </mat-form-field>
+                        </div>
                         <div class="col">
                           <mat-form-field appearance="outline">
                             <mat-label>Cvv</mat-label>
-                            <input matInput type="number" placeholder="Cvv" [(ngModel)]="card.cvv" name="cvv">
+                            <input matInput type="number" placeholder="Cvv" [(ngModel)]="cvv" name="cvv">
                           </mat-form-field>
                         </div>  
                       </div>
                       
-                      <button type="button" class="btn btn-outline-success btn-block mt-4 mb-3" (click)="validateCard(card.id)">
+                      <button type="button" class="btn btn-outline-success btn-block mt-4 mb-3" (click)="validateCard()">
                         <mat-icon style="vertical-align:middle;">done_outline</mat-icon>
                         <span class="ml-2">Valider</span>
                       </button>
                     </ng-template>
 
-                    <button type="button" class="btn btn-outline-danger btn-block">
+                    <button type="button" class="btn btn-outline-danger btn-block" disabled>
                       <mat-icon style="vertical-align:middle;">clear</mat-icon>
                       <span class="ml-2">Supprimer</span>
-                    </button><br>
-                    <mat-divider></mat-divider><br>
-                    <button type="button" class="btn btn-success btn-block">
-                      <mat-icon style="vertical-align:middle;">add_circle_outline</mat-icon>
-                      <span class="ml-2">Ajouter un moyen de paiement ou utiliser une carte virtuelle</span>
                     </button>
+                    
                   </mat-expansion-panel>
                 </div>
                 <div class="form-group">
@@ -261,7 +265,7 @@
                     <mat-icon>flaky</mat-icon>
                     <span class="ml-2" style="vertical-align: top;">Mode sombre</span>
                   </mat-label>
-                  <mat-slide-toggle class="ml-2" color="primary" style="vertical-align: top;" [(ngModel)]="darkMode" name="darkMode"></mat-slide-toggle>
+                  <mat-slide-toggle class="ml-2" color="primary" style="vertical-align: top;" [formControl]="darkModeToggle" name="darkMode"></mat-slide-toggle>
                 </div>
                 <!-- low quant/ shop list-->
                 <div class="form-group">
